@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# agent skills — duplicates of .agents/skills (agent/ is a copy,
+# .claude/skills are symlinks git resolves into full copies)
+/agent/
+/.claude/
