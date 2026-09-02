@@ -1,19 +1,37 @@
-import { ChevronRight } from "lucide-react";
+import { Bell, ChevronRight, User } from "lucide-react";
 import { Logo } from "./Logo";
 
 export function TopNav() {
   return (
-    <nav className="flex items-center justify-between border-b border-neutral-200 bg-white px-6 py-4">
-      <Logo />
-      <div className="flex items-center gap-6 text-sm font-medium text-neutral-700">
-        <a href="#" className="text-neutral-900">
-          Courses
-        </a>
-        <a href="#" className="hover:text-neutral-900">
-          My Learning
-        </a>
-      </div>
-    </nav>
+    <header className="w-full border-b border-line bg-canvas">
+      <nav className="mx-auto flex h-20 w-full max-w-[890px] items-center px-5 sm:h-24 sm:px-0">
+        <Logo />
+        <div className="hidden items-center gap-11 text-base font-medium text-neutral-900 sm:flex sm:ml-[63px]">
+          <a href="#" className="transition-colors hover:text-accent">
+            Courses
+          </a>
+          <a href="#" className="transition-colors hover:text-accent">
+            My Learning
+          </a>
+        </div>
+        <div className="ml-auto flex items-center gap-5">
+          <button
+            type="button"
+            aria-label="Notifications"
+            className="text-neutral-900 transition-colors hover:text-accent"
+          >
+            <Bell size={22} strokeWidth={1.75} />
+          </button>
+          <span
+            aria-label="Your account"
+            role="img"
+            className="flex h-[50px] w-[50px] items-center justify-center overflow-hidden rounded-full border border-line bg-neutral-100 text-neutral-500"
+          >
+            <User size={24} strokeWidth={1.75} />
+          </span>
+        </div>
+      </nav>
+    </header>
   );
 }
 

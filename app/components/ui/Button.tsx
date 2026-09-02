@@ -1,14 +1,18 @@
 import { ButtonHTMLAttributes, ReactNode } from "react";
 
-type ButtonVariant = "primary" | "secondary" | "tertiary" | "text";
+type ButtonVariant = "primary" | "accent" | "secondary" | "tertiary" | "text";
+type ButtonSize = "md" | "lg";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
+  size?: ButtonSize;
   icon?: ReactNode;
   children: ReactNode;
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
+  accent:
+    "bg-accent text-white hover:brightness-95 disabled:bg-primary-200 disabled:text-white/70",
   primary:
     "bg-primary-500 text-white hover:bg-primary-400 disabled:bg-primary-200 disabled:text-white/70",
   secondary:
@@ -18,8 +22,14 @@ const variantClasses: Record<ButtonVariant, string> = {
   text: "bg-transparent text-neutral-900 hover:text-primary-500 px-0 h-auto disabled:text-neutral-300",
 };
 
+const sizeClasses: Record<ButtonSize, string> = {
+  md: "h-11 gap-1.5 rounded-xl px-4 text-sm",
+  lg: "h-[62px] gap-3 rounded-[10px] px-8 text-[17px]",
+};
+
 export function Button({
   variant = "primary",
+  size = "md",
   icon,
   children,
   className = "",
@@ -30,8 +40,8 @@ export function Button({
   return (
     <button
       disabled={disabled}
-      className={`inline-flex items-center justify-center gap-1.5 font-medium text-sm transition-colors disabled:cursor-not-allowed ${
-        isText ? "" : "h-11 rounded-xl px-4"
+      className={`inline-flex items-center justify-center font-medium transition-colors disabled:cursor-not-allowed ${
+        isText ? "gap-1.5 text-sm" : sizeClasses[size]
       } ${variantClasses[variant]} ${className}`}
       {...props}
     >
