@@ -1,4 +1,5 @@
-import { Bell, ChevronRight, User } from "lucide-react";
+import { Bell, ChevronRight } from "lucide-react";
+import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import { Logo } from "./Logo";
 
 export function TopNav() {
@@ -22,13 +23,33 @@ export function TopNav() {
           >
             <Bell size={22} strokeWidth={1.75} />
           </button>
-          <span
-            aria-label="Your account"
-            role="img"
-            className="flex h-[50px] w-[50px] items-center justify-center overflow-hidden rounded-full border border-line bg-neutral-100 text-neutral-500"
-          >
-            <User size={24} strokeWidth={1.75} />
-          </span>
+          <Show when="signed-out">
+            <SignInButton mode="modal">
+              <button
+                type="button"
+                className="text-base font-medium text-neutral-900 transition-colors hover:text-accent"
+              >
+                Sign in
+              </button>
+            </SignInButton>
+            <SignUpButton mode="modal">
+              <button
+                type="button"
+                className="inline-flex h-11 items-center justify-center rounded-xl bg-accent px-4 text-sm font-medium text-white transition-colors hover:brightness-95"
+              >
+                Sign up
+              </button>
+            </SignUpButton>
+          </Show>
+          <Show when="signed-in">
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: "h-[50px] w-[50px] border border-line",
+                },
+              }}
+            />
+          </Show>
         </div>
       </nav>
     </header>
