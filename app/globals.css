@@ -22,6 +22,12 @@
   --color-success: #22c55e;
   --color-info: #f97316;
 
+  /* Warm surface palette (sampled from .agents/design/vertex-home.png) */
+  --color-canvas: #fbf8f5;
+  --color-surface: #fdfcfa;
+  --color-line: #f3e8e1;
+  --color-accent: #e46d48;
+
   /* Radius */
   --radius-xs: 4px;
   --radius-sm: 8px;
@@ -36,7 +42,7 @@
   --shadow-lg: 0 12px 24px -4px rgba(15, 23, 42, 0.1);
   --shadow-xl: 0 20px 40px -8px rgba(15, 23, 42, 0.12);
 
-  --background: var(--color-neutral-50);
+  --background: var(--color-canvas);
   --foreground: var(--color-neutral-900);
 }
 
@@ -61,6 +67,11 @@
 
   --color-success: var(--color-success);
   --color-info: var(--color-info);
+
+  --color-canvas: var(--color-canvas);
+  --color-surface: var(--color-surface);
+  --color-line: var(--color-line);
+  --color-accent: var(--color-accent);
 
   --font-display: var(--font-playfair), Georgia, serif;
   --font-sans: var(--font-inter), Arial, Helvetica, sans-serif;

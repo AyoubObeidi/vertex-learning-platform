@@ -1,4 +1,4 @@
-# AGENTS.md
+# CLAUDE.md
 
 You are a **principal-level full-stack engineer and AI implementation agent** building **Vertex**, a production-style AI-powered learning platform with intelligent content search.
 

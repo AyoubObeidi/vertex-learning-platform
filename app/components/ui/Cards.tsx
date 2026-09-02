@@ -12,13 +12,15 @@ function CardShell({ children }: { children: ReactNode }) {
 
 export function CourseCard({
   initial,
+  icon,
   title,
   description,
   level,
   duration,
   modules,
 }: {
-  initial: string;
+  initial?: string;
+  icon?: ReactNode;
   title: string;
   description: string;
   level: string;
@@ -26,26 +28,30 @@ export function CourseCard({
   modules: string;
 }) {
   return (
-    <CardShell>
-      <div className="flex h-10 w-10 items-center justify-center rounded-md bg-neutral-900 font-display text-lg text-white">
-        {initial}
+    <div className="flex h-full flex-col rounded-md border border-line bg-surface p-[26px] pt-8 transition-shadow hover:shadow-md">
+      {icon ?? (
+        <div className="flex h-[74px] w-[74px] items-center justify-center rounded-[16px] bg-neutral-900 font-display text-3xl text-white">
+          {initial}
+        </div>
+      )}
+      <h3 className="mt-6 font-display text-[19px] font-semibold leading-snug text-neutral-900">
+        {title}
+      </h3>
+      <p className="mt-4 text-[14px] leading-[24px] text-neutral-700">{description}</p>
+      <div className="mt-auto border-t border-line pt-6">
+        <div className="-mx-1 flex flex-wrap items-center gap-x-1.5 gap-y-2 whitespace-nowrap text-[10px] text-neutral-500">
+          <span className="flex items-center gap-1">
+            <BarChart3 size={12} strokeWidth={1.75} /> {level}
+          </span>
+          <span className="flex items-center gap-1">
+            <Clock size={12} strokeWidth={1.75} /> {duration}
+          </span>
+          <span className="flex items-center gap-1">
+            <FileText size={12} strokeWidth={1.75} /> {modules}
+          </span>
+        </div>
       </div>
-      <div>
-        <h3 className="font-display text-lg font-semibold text-neutral-900">{title}</h3>
-        <p className="mt-1 text-sm text-neutral-500">{description}</p>
-      </div>
-      <div className="flex items-center gap-4 text-xs text-neutral-500">
-        <span className="flex items-center gap-1">
-          <BarChart3 size={14} /> {level}
-        </span>
-        <span className="flex items-center gap-1">
-          <Clock size={14} /> {duration}
-        </span>
-        <span className="flex items-center gap-1">
-          <FileText size={14} /> {modules}
-        </span>
-      </div>
-    </CardShell>
+    </div>
   );
 }
 

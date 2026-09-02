@@ -4,25 +4,48 @@ import { Search, ChevronDown } from "lucide-react";
 interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: ReactNode;
   shortcut?: string;
+  inputSize?: "md" | "lg";
 }
 
+const sizeClasses = {
+  md: {
+    field: "h-11 gap-2 rounded-md border-neutral-200 bg-white px-4 text-sm",
+    kbd: "rounded border-neutral-200 px-1.5 py-0.5 text-xs",
+  },
+  lg: {
+    field: "h-16 gap-4 rounded-[14px] border-line bg-surface px-6 text-[17px] sm:h-[84px]",
+    kbd: "rounded-sm border-line px-3 py-2 text-sm",
+  },
+} as const;
+
 export function TextInput({
-  icon = <Search size={18} className="text-neutral-500" />,
+  icon,
   shortcut,
+  inputSize = "md",
   className = "",
   ...props
 }: TextInputProps) {
+  const s = sizeClasses[inputSize];
+  const defaultIcon = (
+    <Search
+      size={inputSize === "lg" ? 24 : 18}
+      strokeWidth={inputSize === "lg" ? 2 : 1.75}
+      className="shrink-0 text-neutral-500"
+    />
+  );
   return (
     <div
-      className={`flex h-11 items-center gap-2 rounded-md border border-neutral-200 bg-white px-4 text-sm text-neutral-900 focus-within:border-primary-400 ${className}`}
+      className={`flex items-center border text-neutral-900 transition-colors focus-within:border-accent ${s.field} ${className}`}
     >
-      {icon}
+      {icon ?? defaultIcon}
       <input
-        className="flex-1 bg-transparent outline-none placeholder:text-neutral-500"
+        className="min-w-0 flex-1 bg-transparent outline-none placeholder:text-neutral-500"
         {...props}
       />
       {shortcut && (
-        <kbd className="rounded border border-neutral-200 px-1.5 py-0.5 text-xs text-neutral-500">
+        <kbd
+          className={`shrink-0 border font-sans font-medium text-neutral-700 ${s.kbd}`}
+        >
           {shortcut}
         </kbd>
       )}
