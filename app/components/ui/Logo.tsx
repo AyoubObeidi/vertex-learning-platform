@@ -1,3 +1,8 @@
+/**
+ * The Vertex brand logo with a geometric triangle icon and wordmark.
+ *
+ * @param size - Logo size variant (sm or md)
+ */
 export function Logo({ size = "md" }: { size?: "sm" | "md" }) {
   const text = size === "sm" ? "text-xl" : "text-[25px]";
   const mark = size === "sm" ? 22 : 28;

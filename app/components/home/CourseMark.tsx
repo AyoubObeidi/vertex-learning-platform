@@ -6,6 +6,9 @@
 
 const tile = "flex h-[74px] w-[74px] items-center justify-center rounded-[16px]";
 
+/**
+ * Displays a brand mark for Next.js courses with a dark background and letter "N".
+ */
 export function NextjsMark() {
   return (
     <div className={`${tile} bg-neutral-900`} aria-hidden="true">
@@ -14,6 +17,9 @@ export function NextjsMark() {
   );
 }
 
+/**
+ * Displays a brand mark for TypeScript courses with the TypeScript brand color.
+ */
 export function TypeScriptMark() {
   return (
     <div className={`${tile} bg-[#3178C6]`} aria-hidden="true">
@@ -33,6 +39,9 @@ const containers = [
   { x: 38, y: 5 },
 ];
 
+/**
+ * Displays a brand mark for Docker courses with a Docker whale icon rendered as SVG.
+ */
 export function DockerMark() {
   return (
     <div className={tile} aria-hidden="true">

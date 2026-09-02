@@ -1,3 +1,9 @@
+/**
+ * Displays a progress bar indicating completion percentage.
+ *
+ * @param value - Progress percentage (0-100)
+ * @param showLabel - Whether to display the percentage label
+ */
 export function ProgressBar({
   value,
   showLabel = true,
