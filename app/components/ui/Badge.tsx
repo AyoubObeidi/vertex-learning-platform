@@ -9,13 +9,6 @@ const variantClasses: Record<BadgeVariant, string> = {
   neutral: "bg-neutral-100 text-neutral-700",
 };
 
-/**
- * A small badge component for labeling and categorizing content.
- * Displays with different color schemes based on the variant.
- *
- * @param variant - Visual style of the badge (video, lesson, popular, neutral)
- * @param children - Content to display inside the badge
- */
 export function Badge({
   variant = "neutral",
   children,

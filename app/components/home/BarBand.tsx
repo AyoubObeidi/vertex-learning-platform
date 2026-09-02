@@ -24,18 +24,8 @@ const bars: { left: number; width: number; height: number }[] = [
   { left: 864, width: 96, height: 170 },
 ];
 
-/**
- * Converts a pixel value from the design reference to a responsive percentage.
- *
- * @param value - Pixel value from the 960px-wide reference
- * @returns CSS percentage string
- */
 const pct = (value: number) => `${(value / REFERENCE_WIDTH) * 100}%`;
 
-/**
- * Renders a decorative bar-chart visualization at the bottom of the home page.
- * Bar dimensions are measured from the design reference and scale responsively.
- */
 export function BarBand() {
   return (
     <div

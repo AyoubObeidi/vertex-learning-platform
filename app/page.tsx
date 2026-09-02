@@ -16,10 +16,6 @@ const marks: Record<string, React.ReactNode> = {
   typescript: <TypeScriptMark />,
 };
 
-/**
- * The home page component displaying the hero section, course catalog,
- * and decorative bar chart visualization.
- */
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-canvas">

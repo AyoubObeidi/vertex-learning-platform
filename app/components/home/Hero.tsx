@@ -2,10 +2,6 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "../ui/Button";
 import { TextInput } from "../ui/Input";
 
-/**
- * The hero section of the home page, featuring the main heading, value proposition,
- * call-to-action button, and search input.
- */
 export function Hero() {
   return (
     <section className="border-b border-line">

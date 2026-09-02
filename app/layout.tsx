@@ -21,12 +21,6 @@ export const metadata: Metadata = {
     "Vertex understands what you want to learn and finds the exact lessons across all your courses.",
 };
 
-/**
- * The root layout component that wraps all pages in the application.
- * Sets up global fonts, metadata, Clerk authentication provider, and base styling.
- *
- * @param children - Page content to render within the layout
- */
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html

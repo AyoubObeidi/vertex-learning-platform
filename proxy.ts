@@ -1,7 +1,3 @@
-/**
- * Next.js middleware configuration for Clerk authentication.
- * Applies Clerk's authentication middleware to all routes matching the specified patterns.
- */
 import { clerkMiddleware } from "@clerk/nextjs/server";
 
 export default clerkMiddleware();

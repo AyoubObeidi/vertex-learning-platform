@@ -27,18 +27,6 @@ const sizeClasses: Record<ButtonSize, string> = {
   lg: "h-[62px] gap-3 rounded-[10px] px-8 text-[17px]",
 };
 
-/**
- * A versatile button component with multiple visual variants and sizes.
- * Supports optional icon placement and follows the Vertex design system.
- *
- * @param variant - Visual style of the button (primary, accent, secondary, tertiary, text)
- * @param size - Button size (md or lg)
- * @param icon - Optional icon to display after the button text
- * @param children - Button content
- * @param className - Additional CSS classes to apply
- * @param disabled - Whether the button is disabled
- * @param props - Additional HTML button attributes
- */
 export function Button({
   variant = "primary",
   size = "md",

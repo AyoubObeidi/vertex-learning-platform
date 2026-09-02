@@ -2,11 +2,6 @@ import { ReactNode } from "react";
 import { BarChart3, Clock, ExternalLink, FileText, PlayCircle } from "lucide-react";
 import { Badge } from "./Badge";
 
-/**
- * Internal wrapper component providing consistent styling for card layouts.
- *
- * @param children - Card content
- */
 function CardShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex flex-col gap-3 rounded-lg border border-neutral-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
@@ -15,18 +10,6 @@ function CardShell({ children }: { children: ReactNode }) {
   );
 }
 
-/**
- * Displays a course as a card with metadata including level, duration, and module count.
- * Shows either a custom icon or an initial letter on a dark background.
- *
- * @param initial - Single letter to display when no icon is provided
- * @param icon - Optional custom icon/logo for the course
- * @param title - Course title
- * @param description - Course description
- * @param level - Difficulty level (e.g., "Beginner", "Intermediate")
- * @param duration - Total course duration (e.g., "18h 24m")
- * @param modules - Number of modules (e.g., "12 modules")
- */
 export function CourseCard({
   initial,
   icon,
@@ -72,17 +55,6 @@ export function CourseCard({
   );
 }
 
-/**
- * Displays a lesson or video result as a card with a badge, title, description, and call-to-action.
- * Used in search results and lesson listings.
- *
- * @param badgeVariant - Type of badge to display (video or lesson)
- * @param badgeLabel - Text for the badge
- * @param title - Lesson or video title
- * @param description - Brief description of the content
- * @param meta - Metadata string (e.g., "Lesson 5.1 · 12:45")
- * @param cta - Call-to-action text (e.g., "Watch from 12:45")
- */
 export function LessonCard({
   badgeVariant,
   badgeLabel,
@@ -115,13 +87,6 @@ export function LessonCard({
   );
 }
 
-/**
- * Displays a downloadable resource as a card with an icon, title, and file metadata.
- *
- * @param title - Resource title
- * @param description - Brief description of the resource
- * @param meta - File metadata (e.g., "PDF · 1.2 MB")
- */
 export function ResourceCard({
   title,
   description,

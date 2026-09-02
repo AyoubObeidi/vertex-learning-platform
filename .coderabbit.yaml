@@ -5,3 +5,8 @@ reviews:
     # (next + eslint-config-next). Lint runs locally via `npm run lint`.
     eslint:
       enabled: false
+  finishing_touches:
+    # This codebase documents through naming, not JSDoc. Auto-generated
+    # docstrings on self-explanatory components are noise here.
+    docstrings:
+      enabled: false

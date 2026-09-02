@@ -18,16 +18,6 @@ const sizeClasses = {
   },
 } as const;
 
-/**
- * A styled text input component with optional icon and keyboard shortcut display.
- * Commonly used for search inputs.
- *
- * @param icon - Optional icon to display on the left side
- * @param shortcut - Optional keyboard shortcut to display on the right (e.g., "⌘ K")
- * @param inputSize - Input size variant (md or lg)
- * @param className - Additional CSS classes to apply
- * @param props - Additional HTML input attributes
- */
 export function TextInput({
   icon,
   shortcut,
@@ -63,13 +53,6 @@ export function TextInput({
   );
 }
 
-/**
- * A styled select dropdown component with a custom chevron icon.
- *
- * @param className - Additional CSS classes to apply
- * @param children - Option elements to display in the dropdown
- * @param props - Additional HTML select attributes
- */
 export function Select({
   className = "",
   children,

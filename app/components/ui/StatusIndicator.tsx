@@ -9,11 +9,6 @@ const config: Record<Status, { label: string; icon: typeof Circle; className: st
   locked: { label: "Locked", icon: Lock, className: "text-neutral-300" },
 };
 
-/**
- * Displays a status indicator with an icon and label for lesson progress states.
- *
- * @param status - Current status (in-progress, completed, now-playing, or locked)
- */
 export function StatusIndicator({ status }: { status: Status }) {
   const { label, icon: Icon, className } = config[status];
   return (

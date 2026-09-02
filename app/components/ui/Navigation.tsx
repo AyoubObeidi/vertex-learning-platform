@@ -2,10 +2,6 @@ import { Bell, ChevronRight } from "lucide-react";
 import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import { Logo } from "./Logo";
 
-/**
- * The main navigation bar displayed at the top of the application.
- * Includes logo, main navigation links, notification bell, and authentication controls.
- */
 export function TopNav() {
   return (
     <header className="w-full border-b border-line bg-canvas">
@@ -60,11 +56,6 @@ export function TopNav() {
   );
 }
 
-/**
- * Displays a breadcrumb navigation trail showing the current page hierarchy.
- *
- * @param items - Array of breadcrumb labels in hierarchical order
- */
 export function Breadcrumbs({ items }: { items: string[] }) {
   return (
     <div className="flex items-center gap-2 text-sm text-neutral-500">
@@ -78,12 +69,6 @@ export function Breadcrumbs({ items }: { items: string[] }) {
   );
 }
 
-/**
- * Displays pagination controls for navigating through multiple pages of content.
- *
- * @param page - Current page number
- * @param total - Total number of pages
- */
 export function Pagination({
   page,
   total,
