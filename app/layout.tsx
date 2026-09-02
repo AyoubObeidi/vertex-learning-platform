@@ -1,3 +1,4 @@
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
@@ -20,6 +21,12 @@ export const metadata: Metadata = {
     "Vertex understands what you want to learn and finds the exact lessons across all your courses.",
 };
 
+/**
+ * The root layout component that wraps all pages in the application.
+ * Sets up global fonts, metadata, Clerk authentication provider, and base styling.
+ *
+ * @param children - Page content to render within the layout
+ */
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -27,7 +34,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${playfair.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-canvas text-neutral-900">
-        {children}
+        <ClerkProvider>
+          {children}
+        </ClerkProvider>
       </body>
     </html>
   );

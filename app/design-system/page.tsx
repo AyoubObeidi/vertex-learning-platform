@@ -21,6 +21,14 @@ import { CourseCard, LessonCard, ResourceCard } from "../components/ui/Cards";
 import { TopNav, Breadcrumbs, Pagination } from "../components/ui/Navigation";
 import { Logo } from "../components/ui/Logo";
 
+/**
+ * A section container for organizing design system components with numbered headings.
+ *
+ * @param number - Section number for display
+ * @param title - Section title
+ * @param children - Section content
+ * @param className - Additional CSS classes
+ */
 function Section({
   number,
   title,
@@ -47,6 +55,13 @@ function Section({
   );
 }
 
+/**
+ * Displays a color swatch with its name and hex value.
+ *
+ * @param name - Color name
+ * @param hex - Hex color code
+ * @param className - Tailwind classes for the color
+ */
 function Swatch({ name, hex, className }: { name: string; hex: string; className: string }) {
   return (
     <div className="flex flex-col gap-2">
@@ -100,6 +115,10 @@ const principles = [
   { icon: Accessibility, title: "Accessible", desc: "Design with accessibility and inclusion in mind." },
 ];
 
+/**
+ * The design system page showcasing all Vertex UI components, colors, typography,
+ * spacing, and design principles for reference and documentation.
+ */
 export default function Home() {
   return (
     <div className="min-h-screen bg-neutral-50">
