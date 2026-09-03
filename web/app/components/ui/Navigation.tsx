@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Bell, ChevronRight } from "lucide-react";
 import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import { Logo } from "./Logo";
@@ -8,9 +9,9 @@ export function TopNav() {
       <nav className="mx-auto flex h-20 w-full max-w-[890px] items-center px-5 sm:h-24 sm:px-0">
         <Logo />
         <div className="hidden items-center gap-11 text-base font-medium text-neutral-900 sm:flex sm:ml-[63px]">
-          <a href="#" className="transition-colors hover:text-accent">
+          <Link href="/courses" className="transition-colors hover:text-accent">
             Courses
-          </a>
+          </Link>
           <a href="#" className="transition-colors hover:text-accent">
             My Learning
           </a>
