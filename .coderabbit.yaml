@@ -1,0 +1,12 @@
+# https://docs.coderabbit.ai/getting-started/configure-coderabbit
+reviews:
+  tools:
+    # CodeRabbit's sandbox times out installing this project's dependency tree
+    # (next + eslint-config-next). Lint runs locally via `npm run lint`.
+    eslint:
+      enabled: false
+  finishing_touches:
+    # This codebase documents through naming, not JSDoc. Auto-generated
+    # docstrings on self-explanatory components are noise here.
+    docstrings:
+      enabled: false
