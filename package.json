@@ -2,27 +2,17 @@
   "name": "vertex",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "web",
+    "studio"
+  ],
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "@clerk/nextjs": "^7.8.4",
-    "lucide-react": "^1.39.0",
-    "next": "16.3.4",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.3.4",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "dev:web": "npm run dev --workspace web",
+    "dev:studio": "npm run dev --workspace studio",
+    "build:web": "npm run build --workspace web",
+    "build:studio": "npm run build --workspace studio",
+    "lint": "npm run lint --workspace web",
+    "typecheck": "npm run typecheck --workspace web",
+    "typegen": "npm run typegen --workspace studio"
   }
 }
