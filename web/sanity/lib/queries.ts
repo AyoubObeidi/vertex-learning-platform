@@ -71,6 +71,18 @@ export const COURSES_CATALOG_QUERY = defineQuery(/* groq */ `
     }
 `)
 
+/**
+ * The three courses an author has flagged popular, for the home page. Filtered
+ * on the flag rather than padded from the rest of the catalog — padding would
+ * make the flag meaningless.
+ */
+export const POPULAR_COURSES_QUERY = defineQuery(/* groq */ `
+  *[_type == "course" && defined(slug.current) && popular == true]
+    | order(studentCount desc, title asc)[0...3]{
+      ${courseCardFragment}
+    }
+`)
+
 export const COURSES_BY_CATEGORY_QUERY = defineQuery(/* groq */ `
   *[_type == "course" && defined(slug.current) && category->slug.current == $category]
     | order(popular desc, title asc){

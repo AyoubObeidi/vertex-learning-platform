@@ -1,22 +1,18 @@
+import Link from "next/link";
 import { ArrowRight, Star } from "lucide-react";
 import { TopNav } from "./components/ui/Navigation";
-import { CourseCard } from "./components/ui/Cards";
 import { Hero } from "./components/home/Hero";
 import { BarBand } from "./components/home/BarBand";
-import {
-  DockerMark,
-  NextjsMark,
-  TypeScriptMark,
-} from "./components/home/CourseMark";
-import { placeholderCourses } from "./lib/placeholder-courses";
+import { CourseGrid } from "./components/home/CourseGrid";
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { POPULAR_COURSES_QUERY } from "@/sanity/lib/queries";
 
-const marks: Record<string, React.ReactNode> = {
-  nextjs: <NextjsMark />,
-  docker: <DockerMark />,
-  typescript: <TypeScriptMark />,
-};
+export default async function Home() {
+  const courses = await sanityFetch({
+    query: POPULAR_COURSES_QUERY,
+    tags: ["courses"],
+  });
 
-export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-canvas">
       <TopNav />
@@ -29,28 +25,16 @@ export default function Home() {
             <h2 className="font-display text-[26px] font-semibold text-neutral-900">
               All Courses
             </h2>
-            <a
-              href="#"
+            <Link
+              href="/courses"
               className="inline-flex items-center gap-2 text-sm font-medium text-accent transition-colors hover:brightness-95"
             >
               View all courses
               <ArrowRight size={16} strokeWidth={2} />
-            </a>
+            </Link>
           </div>
 
-          <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {placeholderCourses.map((course) => (
-              <CourseCard
-                key={course.id}
-                icon={marks[course.id]}
-                title={course.title}
-                description={course.description}
-                level={course.level}
-                duration={course.duration}
-                modules={course.modules}
-              />
-            ))}
-          </div>
+          <CourseGrid courses={courses} />
 
           <div className="mt-14 flex items-center gap-5">
             <span aria-hidden="true" className="h-px flex-1 bg-line" />
