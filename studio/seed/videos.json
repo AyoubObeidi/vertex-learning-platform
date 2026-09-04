@@ -1,0 +1,1082 @@
+{
+  "a-kubectl-debugging-workflow": {
+    "videoId": "9ymDFORYv5k",
+    "url": "https://www.youtube.com/watch?v=9ymDFORYv5k",
+    "title": "K8s Debugging Like a Pro: 10 kubectl Tips (2026)",
+    "channel": "Thetips4you",
+    "durationSeconds": 2910,
+    "query": "kubectl debugging workflow exec port forward ephemeral containers"
+  },
+  "aggregation-and-window-functions": {
+    "videoId": "rIcB4zMYMas",
+    "url": "https://www.youtube.com/watch?v=rIcB4zMYMas",
+    "title": "SQL Window Functions | Clearly Explained | PARTITION BY, ORDER BY, ROW_NUMBER, RANK, DENSE_RANK",
+    "channel": "Maven Analytics",
+    "durationSeconds": 472,
+    "query": "sql window functions over partition by tutorial"
+  },
+  "anatomy-of-a-rag-pipeline": {
+    "videoId": "T-D1OfcDW1M",
+    "url": "https://www.youtube.com/watch?v=T-D1OfcDW1M",
+    "title": "What is Retrieval-Augmented Generation (RAG)?",
+    "channel": "IBM Technology",
+    "durationSeconds": 396,
+    "query": "rag pipeline architecture ingestion retrieval generation"
+  },
+  "app-router-file-conventions": {
+    "videoId": "9602Yzvd7ik",
+    "url": "https://www.youtube.com/watch?v=9602Yzvd7ik",
+    "title": "Next.js 15 Tutorial - 5 - Routing",
+    "channel": "Codevolution",
+    "durationSeconds": 350,
+    "query": "Next.js app router file conventions tutorial"
+  },
+  "authentication-with-tokens": {
+    "videoId": "AcYF18oGn6Y",
+    "url": "https://www.youtube.com/watch?v=AcYF18oGn6Y",
+    "title": "Authentication in React with JWTs, Access & Refresh Tokens (Complete Tutorial)",
+    "channel": "Cosden Solutions",
+    "durationSeconds": 1425,
+    "query": "jwt authentication api tokens refresh tutorial"
+  },
+  "authorisation-and-scopes": {
+    "videoId": "rvZ35YW4t5k",
+    "url": "https://www.youtube.com/watch?v=rvZ35YW4t5k",
+    "title": "Role-based access control (RBAC) vs. Attribute-based access control (ABAC)",
+    "channel": "IBM Technology",
+    "durationSeconds": 459,
+    "query": "api authorization rbac scopes permissions design"
+  },
+  "building-an-evaluation-set": {
+    "videoId": "a3SMraZWNNs",
+    "url": "https://www.youtube.com/watch?v=a3SMraZWNNs",
+    "title": "How to Systematically Setup LLM Evals (Metrics, Unit Tests, LLM-as-a-Judge)",
+    "channel": "Dave Ebbelaar",
+    "durationSeconds": 3302,
+    "query": "llm evaluation benchmark test set building evals"
+  },
+  "building-images-in-ci": {
+    "videoId": "noyT5tTuUEI",
+    "url": "https://www.youtube.com/watch?v=noyT5tTuUEI",
+    "title": "How to Accelerate GitHub Actions CI/CD Pipelines with Artifact Caching for Docker, Helm, Git, & More",
+    "channel": "Varnish Software",
+    "durationSeconds": 3623,
+    "query": "docker build github actions ci pipeline caching"
+  },
+  "bundle-analysis": {
+    "videoId": "kwUfeWe7DCw",
+    "url": "https://www.youtube.com/watch?v=kwUfeWe7DCw",
+    "title": "How to make your JavaScript Bundle Smaller",
+    "channel": "Beyond Fireship",
+    "durationSeconds": 169,
+    "query": "javascript bundle analyzer reduce bundle size"
+  },
+  "calling-http-apis": {
+    "videoId": "ULv9x0GQFbw",
+    "url": "https://www.youtube.com/watch?v=ULv9x0GQFbw",
+    "title": "How To Handle Errors & Exceptions with Requests and Python",
+    "channel": "John Watson Rooney",
+    "durationSeconds": 406,
+    "query": "python requests library api tutorial error handling"
+  },
+  "choosing-an-embedding-model": {
+    "videoId": "djp4205tHGU",
+    "url": "https://www.youtube.com/watch?v=djp4205tHGU",
+    "title": "How to choose an embedding model",
+    "channel": "Weaviate vector database",
+    "durationSeconds": 244,
+    "query": "text embeddings model comparison vector similarity"
+  },
+  "chunking-strategies": {
+    "videoId": "pIGRwMjhMaQ",
+    "url": "https://www.youtube.com/watch?v=pIGRwMjhMaQ",
+    "title": "Chunking Strategies in RAG: Optimising Data for Advanced AI Responses",
+    "channel": "Mervin Praison",
+    "durationSeconds": 842,
+    "query": "rag chunking strategies chunk size overlap"
+  },
+  "citations-and-attribution": {
+    "videoId": "0mYA7EJOsDI",
+    "url": "https://www.youtube.com/watch?v=0mYA7EJOsDI",
+    "title": "146. Enterprise Hybrid RAG Engine: Search, Reranking & Citations | Custom AI Build",
+    "channel": "CodersArts",
+    "durationSeconds": 398,
+    "query": "llm citations source attribution rag implementation"
+  },
+  "code-splitting-and-lazy-boundaries": {
+    "videoId": "trYfDFel8e8",
+    "url": "https://www.youtube.com/watch?v=trYfDFel8e8",
+    "title": "Code Splitting and Lazy Loading | React JS Advanced Concepts",
+    "channel": "Web Tech Talk ",
+    "durationSeconds": 413,
+    "query": "react code splitting lazy suspense dynamic import"
+  },
+  "concurrent-rendering-with-usetransition": {
+    "videoId": "N5R6NL3UE7I",
+    "url": "https://www.youtube.com/watch?v=N5R6NL3UE7I",
+    "title": "React 18 useTransition Hook Crash Course",
+    "channel": "Web Dev Simplified",
+    "durationSeconds": 470,
+    "query": "react useTransition useDeferredValue concurrent rendering"
+  },
+  "conditional-and-mapped-types": {
+    "videoId": "fn12l_8LfxI",
+    "url": "https://www.youtube.com/watch?v=fn12l_8LfxI",
+    "title": "What are TypeScript MAPPED Types and how to use them Effectively",
+    "channel": "basarat",
+    "durationSeconds": 249,
+    "query": "typescript conditional types mapped types tutorial"
+  },
+  "configmaps-and-secrets": {
+    "videoId": "FAnQTgr04mU",
+    "url": "https://www.youtube.com/watch?v=FAnQTgr04mU",
+    "title": "Kubernetes ConfigMap and Secret as Kubernetes Volumes | Demo",
+    "channel": "TechWorld with Nana",
+    "durationSeconds": 1014,
+    "query": "kubernetes configmap secret environment variables tutorial"
+  },
+  "constraints-and-defaults": {
+    "videoId": "bfpT28smq2E",
+    "url": "https://www.youtube.com/watch?v=bfpT28smq2E",
+    "title": "How to Write a TypeScript Generic That Enforces String Property Values with Partial Record keyof T,",
+    "channel": "vlogommentary",
+    "durationSeconds": 190,
+    "query": "typescript generic constraints extends keyof"
+  },
+  "container-networking": {
+    "videoId": "2lZKxboPbjU",
+    "url": "https://www.youtube.com/watch?v=2lZKxboPbjU",
+    "title": "EP05 - Docker Networks",
+    "channel": "Devops Basics with Dali",
+    "durationSeconds": 351,
+    "query": "docker networking bridge network container communication"
+  },
+  "content-negotiation-and-versioning": {
+    "videoId": "vsb4ZkUytrU",
+    "url": "https://www.youtube.com/watch?v=vsb4ZkUytrU",
+    "title": "What is API Versioning? Two Strategies for Designing Better APIs",
+    "channel": "Erik Wilde",
+    "durationSeconds": 213,
+    "query": "api versioning strategies rest breaking changes"
+  },
+  "context-without-the-re-render-tax": {
+    "videoId": "16yMmAJSGek",
+    "url": "https://www.youtube.com/watch?v=16yMmAJSGek",
+    "title": "This Context API Mistake Ruins Your Whole React App (All Components Re-Render)",
+    "channel": "ByteGrad",
+    "durationSeconds": 337,
+    "query": "react context performance re-renders split context"
+  },
+  "control-flow-and-comprehensions": {
+    "videoId": "YlY2g2xrl6Q",
+    "url": "https://www.youtube.com/watch?v=YlY2g2xrl6Q",
+    "title": "Learn Python LIST COMPREHENSIONS in 10 minutes! 📃",
+    "channel": "Bro Code",
+    "durationSeconds": 620,
+    "query": "python list comprehension for loops tutorial"
+  },
+  "core-web-vitals-in-the-field": {
+    "videoId": "cGiSr0MilsI",
+    "url": "https://www.youtube.com/watch?v=cGiSr0MilsI",
+    "title": "Core Web Vitals Explained: LCP, INP & CLS",
+    "channel": "I Code It",
+    "durationSeconds": 886,
+    "query": "core web vitals LCP INP CLS explained field data"
+  },
+  "cost-caching-and-token-budgets": {
+    "videoId": "u57EnkQaUTY",
+    "url": "https://www.youtube.com/watch?v=u57EnkQaUTY",
+    "title": "What is Prompt Caching? Optimize LLM Latency with AI Transformers",
+    "channel": "IBM Technology",
+    "durationSeconds": 546,
+    "query": "llm cost optimization prompt caching token usage"
+  },
+  "ctes-and-subqueries": {
+    "videoId": "K1WeoKxLZ5o",
+    "url": "https://www.youtube.com/watch?v=K1WeoKxLZ5o",
+    "title": "Advanced SQL Tutorial | CTE (Common Table Expression)",
+    "channel": "Alex The Analyst",
+    "durationSeconds": 224,
+    "query": "sql common table expressions cte recursive tutorial"
+  },
+  "dataframes-and-series": {
+    "videoId": "EXIgjIBu4EU",
+    "url": "https://www.youtube.com/watch?v=EXIgjIBu4EU",
+    "title": "Learn Pandas in 30 Minutes - Python Pandas Tutorial",
+    "channel": "Tech With Tim",
+    "durationSeconds": 1837,
+    "query": "pandas dataframe series basics tutorial"
+  },
+  "dates-paths-and-the-standard-library": {
+    "videoId": "yxa-DJuuTBI",
+    "url": "https://www.youtube.com/watch?v=yxa-DJuuTBI",
+    "title": "Python Tutorial: Pathlib - The Modern Way to Handle File Paths",
+    "channel": "Corey Schafer",
+    "durationSeconds": 2091,
+    "query": "python datetime pathlib standard library tutorial"
+  },
+  "debugging-a-failing-container": {
+    "videoId": "kGaGEW6VBrI",
+    "url": "https://www.youtube.com/watch?v=kGaGEW6VBrI",
+    "title": "EP09 - Docker Logs and Debugging | Real Troubleshooting Example",
+    "channel": "Devops Basics with Dali",
+    "durationSeconds": 388,
+    "query": "debug docker container exit code logs troubleshooting"
+  },
+  "declaration-files-and-module-augmentation": {
+    "videoId": "zu-EgnbmcLY",
+    "url": "https://www.youtube.com/watch?v=zu-EgnbmcLY",
+    "title": "Don't put your types in .d.ts files",
+    "channel": "Matt Pocock",
+    "durationSeconds": 234,
+    "query": "typescript declaration files d.ts module augmentation"
+  },
+  "deploying-and-monitoring-a-next-js-app": {
+    "videoId": "0fONene3OIA",
+    "url": "https://www.youtube.com/watch?v=0fONene3OIA",
+    "title": "The ultimate guide to web performance",
+    "channel": "Beyond Fireship",
+    "durationSeconds": 403,
+    "query": "deploy Next.js production monitoring core web vitals"
+  },
+  "designing-a-tool-interface": {
+    "videoId": "UMYtqHptYvA",
+    "url": "https://www.youtube.com/watch?v=UMYtqHptYvA",
+    "title": "Guide to Architect Secure AI Agents: Best Practices for Safety",
+    "channel": "IBM Technology",
+    "durationSeconds": 825,
+    "query": "designing tools for ai agents api design best practices"
+  },
+  "designing-resources-and-urls": {
+    "videoId": "7nm1pYuKAhY",
+    "url": "https://www.youtube.com/watch?v=7nm1pYuKAhY",
+    "title": "Deep Dive into REST API Design and Implementation Best Practices",
+    "channel": "Software Developer Diaries",
+    "durationSeconds": 722,
+    "query": "rest api url design resource naming best practices"
+  },
+  "detecting-and-reducing-hallucination": {
+    "videoId": "r0q1n8BJ0QI",
+    "url": "https://www.youtube.com/watch?v=r0q1n8BJ0QI",
+    "title": "What Is LLM HAllucination And How to Reduce It?",
+    "channel": "Krish Naik",
+    "durationSeconds": 720,
+    "query": "reduce llm hallucination grounding faithfulness evaluation"
+  },
+  "dictionaries-and-sets": {
+    "videoId": "MZZSMaEAC2g",
+    "url": "https://www.youtube.com/watch?v=MZZSMaEAC2g",
+    "title": "Python dictionaries are easy 📙",
+    "channel": "Bro Code",
+    "durationSeconds": 486,
+    "query": "python dictionary set operations tutorial"
+  },
+  "docker-compose-for-local-stacks": {
+    "videoId": "BTXfR76WmCw",
+    "url": "https://www.youtube.com/watch?v=BTXfR76WmCw",
+    "title": "Complete Docker Compose Tutorial (with Docker Networking)",
+    "channel": "Monis Yousuf",
+    "durationSeconds": 858,
+    "query": "docker compose tutorial multi container application"
+  },
+  "documenting-with-openapi": {
+    "videoId": "PenvYHJ9Koc",
+    "url": "https://www.youtube.com/watch?v=PenvYHJ9Koc",
+    "title": "Understand OpenAPI in 5 Minutes With Examples",
+    "channel": "florianjsx",
+    "durationSeconds": 274,
+    "query": "openapi swagger documentation node api tutorial"
+  },
+  "dynamic-segments-and-route-parameters": {
+    "videoId": "09aGB_Q6cqE",
+    "url": "https://www.youtube.com/watch?v=09aGB_Q6cqE",
+    "title": "Next.js 15 Tutorial - 56 - generateStaticParams",
+    "channel": "Codevolution",
+    "durationSeconds": 325,
+    "query": "Next.js dynamic routes params generateStaticParams"
+  },
+  "error-boundaries-and-instrumentation": {
+    "videoId": "yhtepBleXkg",
+    "url": "https://www.youtube.com/watch?v=yhtepBleXkg",
+    "title": "Next.js Advanced Error Handling: Server Component errors silently",
+    "channel": "TheCodeForge",
+    "durationSeconds": 866,
+    "query": "Next.js error handling error boundary instrumentation"
+  },
+  "error-handling-and-problem-details": {
+    "videoId": "5vC-IZFkwkg",
+    "url": "https://www.youtube.com/watch?v=5vC-IZFkwkg",
+    "title": "RFC 9457 Problem Details for HTTP APIs",
+    "channel": "Bruce Hartpence - Learning Networks ",
+    "durationSeconds": 532,
+    "query": "api error handling problem details rfc 9457"
+  },
+  "fetching-data-in-server-components": {
+    "videoId": "WKfPctdIDek",
+    "url": "https://www.youtube.com/watch?v=WKfPctdIDek",
+    "title": "Next.js 15 Tutorial - 68 - Fetching Data in Server Components",
+    "channel": "Codevolution",
+    "durationSeconds": 261,
+    "query": "Next.js server components data fetching async await"
+  },
+  "filtering-grouping-and-aggregation": {
+    "videoId": "e622a1Yp9IA",
+    "url": "https://www.youtube.com/watch?v=e622a1Yp9IA",
+    "title": "Unleash Pandas Power | Data Filtering, Sorting, and Grouping",
+    "channel": "Group Learners",
+    "durationSeconds": 1606,
+    "query": "pandas groupby aggregation filtering tutorial"
+  },
+  "form-validation-and-progressive-enhancement": {
+    "videoId": "DK7WqcL9Qq4",
+    "url": "https://www.youtube.com/watch?v=DK7WqcL9Qq4",
+    "title": "Next.js Forms Are Different Now (Server Actions, useActionState, Form Component, Form Backend)",
+    "channel": "ByteGrad",
+    "durationSeconds": 852,
+    "query": "Next.js form validation server actions useActionState"
+  },
+  "full-text-search": {
+    "videoId": "GRwIa-ce7RA",
+    "url": "https://www.youtube.com/watch?v=GRwIa-ce7RA",
+    "title": "Master Postgres Full-text Search in 5 Minutes",
+    "channel": "Supabase",
+    "durationSeconds": 282,
+    "query": "postgresql full text search tsvector tutorial"
+  },
+  "functions-arguments-and-scope": {
+    "videoId": "Vh__2V2tXUM",
+    "url": "https://www.youtube.com/watch?v=Vh__2V2tXUM",
+    "title": "Python *ARGS & **KWARGS are awesome! 📦",
+    "channel": "Bro Code",
+    "durationSeconds": 894,
+    "query": "python functions arguments kwargs scope tutorial"
+  },
+  "guardrails-and-failure-modes": {
+    "videoId": "jrHRe9lSqqA",
+    "url": "https://www.youtube.com/watch?v=jrHRe9lSqqA",
+    "title": "What Is a Prompt Injection Attack?",
+    "channel": "IBM Technology",
+    "durationSeconds": 657,
+    "query": "llm guardrails prompt injection safety mitigation"
+  },
+  "handling-latency-and-cancellation": {
+    "videoId": "fPM621Pliuc",
+    "url": "https://www.youtube.com/watch?v=fPM621Pliuc",
+    "title": "The Power of AbortController in JavaScript - Stopping ongoing HTTP requests and event listeners",
+    "channel": "Kostas Minaidis",
+    "durationSeconds": 1760,
+    "query": "abort controller cancel streaming request javascript"
+  },
+  "horizontal-pod-autoscaling": {
+    "videoId": "dRC-5Z2p7Ns",
+    "url": "https://www.youtube.com/watch?v=dRC-5Z2p7Ns",
+    "title": "Learn Horizontal Pod Autoscaler (HPA) | Hands-on | Kubernetes Tutorial for Beginners | K21Academy",
+    "channel": "Docker & Kubernetes with K21Academy",
+    "durationSeconds": 1685,
+    "query": "kubernetes horizontal pod autoscaler hpa tutorial"
+  },
+  "how-chat-completions-work": {
+    "videoId": "LPZh9BOjkQs",
+    "url": "https://www.youtube.com/watch?v=LPZh9BOjkQs",
+    "title": "Large Language Models explained briefly",
+    "channel": "3Blue1Brown",
+    "durationSeconds": 478,
+    "query": "how large language models work tokens inference explained"
+  },
+  "how-the-query-planner-works": {
+    "videoId": "P7EUFtjeAmI",
+    "url": "https://www.youtube.com/watch?v=P7EUFtjeAmI",
+    "title": "Postgres Explain Explained - How Databases Prepare Optimal Query Plans to Execute SQL",
+    "channel": "Hussein Nasser",
+    "durationSeconds": 617,
+    "query": "postgresql query planner explained statistics cost"
+  },
+  "hybrid-keyword-and-vector-search": {
+    "videoId": "lYxGYXjfrNI",
+    "url": "https://www.youtube.com/watch?v=lYxGYXjfrNI",
+    "title": "Advanced RAG 03 - Hybrid Search BM25 & Ensembles",
+    "channel": "Sam Witteveen",
+    "durationSeconds": 407,
+    "query": "hybrid search bm25 vector search combination rrf"
+  },
+  "image-and-font-optimization": {
+    "videoId": "IU_qq_c_lKA",
+    "url": "https://www.youtube.com/watch?v=IU_qq_c_lKA",
+    "title": "Using Images in Next.js (next/image examples)",
+    "channel": "leerob",
+    "durationSeconds": 550,
+    "query": "Next.js image optimization next font layout shift"
+  },
+  "images-containers-and-layers": {
+    "videoId": "24VY7NsbkFI",
+    "url": "https://www.youtube.com/watch?v=24VY7NsbkFI",
+    "title": "Docker Image Layers Explained: A Beginner's Guide",
+    "channel": "CodeLucky",
+    "durationSeconds": 225,
+    "query": "docker images containers layers explained"
+  },
+  "indexes-b-tree-gin-and-partial": {
+    "videoId": "8s35iHLGHww",
+    "url": "https://www.youtube.com/watch?v=8s35iHLGHww",
+    "title": "How to Choose PostgreSQL Indexes: B-Tree, Hash, BRIN, GIN & GiST",
+    "channel": "JaneExplainsIT",
+    "durationSeconds": 785,
+    "query": "postgresql indexes btree gin partial index tutorial"
+  },
+  "infer-and-type-level-pattern-matching": {
+    "videoId": "nskIP1iyrAo",
+    "url": "https://www.youtube.com/watch?v=nskIP1iyrAo",
+    "title": "TypeScript Template Literal Types",
+    "channel": "Harry Wolff",
+    "durationSeconds": 1151,
+    "query": "typescript infer keyword template literal types"
+  },
+  "ingress-and-routing": {
+    "videoId": "NPFbYpb0I7w",
+    "url": "https://www.youtube.com/watch?v=NPFbYpb0I7w",
+    "title": "Kubernetes Ingress in 5 mins",
+    "channel": "IBM Technology",
+    "durationSeconds": 341,
+    "query": "kubernetes ingress controller routing tutorial"
+  },
+  "iterators-and-generators": {
+    "videoId": "GWZf_B129zs",
+    "url": "https://www.youtube.com/watch?v=GWZf_B129zs",
+    "title": "Python Generators - Visually Explained",
+    "channel": "Visually Explained",
+    "durationSeconds": 907,
+    "query": "python generators yield iterators explained"
+  },
+  "jobs-and-cronjobs": {
+    "videoId": "KwyrHDEJ8LM",
+    "url": "https://www.youtube.com/watch?v=KwyrHDEJ8LM",
+    "title": "Kubernetes CronJobs in 8 Minutes! Schedule and Automate Like a Pro",
+    "channel": "Alta3 Research",
+    "durationSeconds": 468,
+    "query": "kubernetes jobs cronjobs batch workloads tutorial"
+  },
+  "joins-and-set-operations": {
+    "videoId": "zGSv0VaOtR0",
+    "url": "https://www.youtube.com/watch?v=zGSv0VaOtR0",
+    "title": "SQL Joins: Difference Between Inner/Left/Right/Outer Joins",
+    "channel": "JomaClass",
+    "durationSeconds": 652,
+    "query": "sql joins inner left outer explained visually"
+  },
+  "jsonb-and-when-to-use-it": {
+    "videoId": "EwFjETYge9I",
+    "url": "https://www.youtube.com/watch?v=EwFjETYge9I",
+    "title": "Faster queries with index on JSONB columns in Postgres",
+    "channel": "Supabase",
+    "durationSeconds": 298,
+    "query": "postgresql jsonb tutorial indexing when to use"
+  },
+  "keys-and-relationships": {
+    "videoId": "FRT38sQeZ-w",
+    "url": "https://www.youtube.com/watch?v=FRT38sQeZ-w",
+    "title": "Creating Relationship between two tables in PostgreSQL | Set Primary key & Foreign key using pgAdmin",
+    "channel": "Funda of Web IT",
+    "durationSeconds": 352,
+    "query": "postgresql primary key foreign key relationships tutorial"
+  },
+  "layer-caching-and-build-speed": {
+    "videoId": "IH9h4PYhN3Q",
+    "url": "https://www.youtube.com/watch?v=IH9h4PYhN3Q",
+    "title": "Master Docker Builds: Speed Up with Layers & Caching!",
+    "channel": "Systems & Signals",
+    "durationSeconds": 863,
+    "query": "docker layer caching build speed optimization"
+  },
+  "list-virtualization": {
+    "videoId": "Yz4eK-4LKXg",
+    "url": "https://www.youtube.com/watch?v=Yz4eK-4LKXg",
+    "title": "Let's Build a VIRTUALIZED LIST from Scratch in React.js",
+    "channel": "Raj talks tech",
+    "durationSeconds": 766,
+    "query": "react list virtualization windowing tutorial"
+  },
+  "lists-tuples-and-slicing": {
+    "videoId": "gOMW_n2-2Mw",
+    "url": "https://www.youtube.com/watch?v=gOMW_n2-2Mw",
+    "title": "Python lists, sets, and tuples explained 🍍",
+    "channel": "Bro Code",
+    "durationSeconds": 906,
+    "query": "python list slicing tuples tutorial"
+  },
+  "literal-types-and-const-assertions": {
+    "videoId": "6M9aZzm-kEc",
+    "url": "https://www.youtube.com/watch?v=6M9aZzm-kEc",
+    "title": "as const: the most underrated TypeScript feature",
+    "channel": "Matt Pocock",
+    "durationSeconds": 338,
+    "query": "typescript literal types as const assertion"
+  },
+  "locking-and-deadlocks": {
+    "videoId": "URwmzTeuHdk",
+    "url": "https://www.youtube.com/watch?v=URwmzTeuHdk",
+    "title": "All Postgres Locks Explained | A Deep Dive",
+    "channel": "Hussein Nasser",
+    "durationSeconds": 2903,
+    "query": "postgresql locks deadlock troubleshooting tutorial"
+  },
+  "logging-tracing-and-health-checks": {
+    "videoId": "NbVVZlSsvvM",
+    "url": "https://www.youtube.com/watch?v=NbVVZlSsvvM",
+    "title": "OpenTelemetry in Node.js - Traces, Metrics and Logs",
+    "channel": "Better Stack",
+    "durationSeconds": 2284,
+    "query": "structured logging distributed tracing health checks node"
+  },
+  "measuring-retrieval-with-recall-k": {
+    "videoId": "9evIzHs9d60",
+    "url": "https://www.youtube.com/watch?v=9evIzHs9d60",
+    "title": "How to Measure RAG Performance | Recall, Precision, MRR & NDCG",
+    "channel": "SummarizedAI",
+    "durationSeconds": 438,
+    "query": "information retrieval metrics recall precision mrr ndcg"
+  },
+  "memo-usememo-and-usecallback": {
+    "videoId": "3cYtqrNUiVw",
+    "url": "https://www.youtube.com/watch?v=3cYtqrNUiVw",
+    "title": "React Memo | useMemo | useCallback - Optimize Performance of your React Applications",
+    "channel": "Justin Kim",
+    "durationSeconds": 1554,
+    "query": "react memo useMemo useCallback when to use"
+  },
+  "metadata-filtering": {
+    "videoId": "H_kJDHvu-v8",
+    "url": "https://www.youtube.com/watch?v=H_kJDHvu-v8",
+    "title": "Metadata Filtering for Vector Search + Latest Filter Tech",
+    "channel": "James Briggs",
+    "durationSeconds": 2054,
+    "query": "vector search metadata filtering hybrid query"
+  },
+  "methods-status-codes-and-headers": {
+    "videoId": "qmpUfWN7hh4",
+    "url": "https://www.youtube.com/watch?v=qmpUfWN7hh4",
+    "title": "HTTP Status Codes Explained In 5 Minutes",
+    "channel": "ByteByteGo",
+    "durationSeconds": 307,
+    "query": "http methods status codes rest api explained"
+  },
+  "modules-packages-and-virtual-environments": {
+    "videoId": "Y21OR1OPC9A",
+    "url": "https://www.youtube.com/watch?v=Y21OR1OPC9A",
+    "title": "Python Virtual Environments - Full Tutorial for Beginners",
+    "channel": "Tech With Tim",
+    "durationSeconds": 545,
+    "query": "python virtual environment venv pip packages tutorial"
+  },
+  "multi-stage-builds": {
+    "videoId": "t779DVjCKCs",
+    "url": "https://www.youtube.com/watch?v=t779DVjCKCs",
+    "title": "Docker Image BEST Practices - From 1.2GB to 10MB",
+    "channel": "Better Stack",
+    "durationSeconds": 435,
+    "query": "docker multi stage build tutorial smaller images"
+  },
+  "multi-step-agent-loops": {
+    "videoId": "NnT9vzaB9Rw",
+    "url": "https://www.youtube.com/watch?v=NnT9vzaB9Rw",
+    "title": "Master Multi-Step Reasoning in AI Agents: Local Execution Guide #AIAgent #LocalAI #Gemma4 #Ollama",
+    "channel": "Humanity U-turn AI",
+    "durationSeconds": 249,
+    "query": "ai agent loop reasoning multi step tool use"
+  },
+  "namespaces-and-labels": {
+    "videoId": "o_hVKQvbYxM",
+    "url": "https://www.youtube.com/watch?v=o_hVKQvbYxM",
+    "title": "1.5 Labels, Selectors and Namespaces",
+    "channel": "Repiki Bot",
+    "durationSeconds": 515,
+    "query": "kubernetes namespaces labels selectors organization"
+  },
+  "namespaces-cgroups-and-the-isolation-illusion": {
+    "videoId": "xEmDcUExbTs",
+    "url": "https://www.youtube.com/watch?v=xEmDcUExbTs",
+    "title": "Namespaces & Cgroups Explained | How Docker Containers Stay Isolated",
+    "channel": "Shubham gour",
+    "durationSeconds": 485,
+    "query": "linux namespaces cgroups container isolation explained"
+  },
+  "nested-layouts-and-templates": {
+    "videoId": "FT3IXhvzGjo",
+    "url": "https://www.youtube.com/watch?v=FT3IXhvzGjo",
+    "title": "Next.js layout.tsx Explained in Depth | Root Layout, Nested Layouts & Examples",
+    "channel": "FineGap",
+    "durationSeconds": 436,
+    "query": "Next.js nested layouts and templates explained"
+  },
+  "normalisation-in-practice": {
+    "videoId": "GFQaEYEc8_8",
+    "url": "https://www.youtube.com/watch?v=GFQaEYEc8_8",
+    "title": "Learn Database Normalization - 1NF, 2NF, 3NF, 4NF, 5NF",
+    "channel": "Decomplexify",
+    "durationSeconds": 1714,
+    "query": "database normalization explained practical examples"
+  },
+  "observability-for-llm-features": {
+    "videoId": "o76xU3RQ47Q",
+    "url": "https://www.youtube.com/watch?v=o76xU3RQ47Q",
+    "title": "LLM Observability Explained: Why do you need LLM Observability?",
+    "channel": "Agenta AI",
+    "durationSeconds": 188,
+    "query": "llm observability tracing monitoring production"
+  },
+  "optimistic-updates-with-useoptimistic": {
+    "videoId": "M3mGY0pgFk0",
+    "url": "https://www.youtube.com/watch?v=M3mGY0pgFk0",
+    "title": "I Cannot Believe React Made A Hook For This",
+    "channel": "Web Dev Simplified",
+    "durationSeconds": 525,
+    "query": "React useOptimistic hook optimistic UI updates"
+  },
+  "packaging-with-helm": {
+    "videoId": "-ykwb1d0DXU",
+    "url": "https://www.youtube.com/watch?v=-ykwb1d0DXU",
+    "title": "What is Helm in Kubernetes? Helm and Helm Charts explained  | Kubernetes Tutorial 23",
+    "channel": "TechWorld with Nana",
+    "durationSeconds": 856,
+    "query": "helm charts kubernetes packaging tutorial"
+  },
+  "pagination-filtering-and-sorting": {
+    "videoId": "14K_a2kKTxU",
+    "url": "https://www.youtube.com/watch?v=14K_a2kKTxU",
+    "title": "API Pagination: Making Billions of Products Scrolling Possible",
+    "channel": "ByteByteGo",
+    "durationSeconds": 192,
+    "query": "api pagination cursor filtering sorting best practices"
+  },
+  "pagination-versus-infinite-scroll": {
+    "videoId": "V4DYW6-6Giw",
+    "url": "https://www.youtube.com/watch?v=V4DYW6-6Giw",
+    "title": "This Freezes Your UI ❄️ | Pagination vs Infinite Scroll",
+    "channel": "Concepts to Real World",
+    "durationSeconds": 218,
+    "query": "infinite scroll vs pagination performance ux"
+  },
+  "plotting-results": {
+    "videoId": "a9UrKTVEeZA",
+    "url": "https://www.youtube.com/watch?v=a9UrKTVEeZA",
+    "title": "Intro to Data Analysis / Visualization with Python, Matplotlib and Pandas | Matplotlib Tutorial",
+    "channel": "CS Dojo",
+    "durationSeconds": 1321,
+    "query": "pandas matplotlib plotting data visualization tutorial"
+  },
+  "pods-replicasets-and-deployments": {
+    "videoId": "iC-WxZGhFqs",
+    "url": "https://www.youtube.com/watch?v=iC-WxZGhFqs",
+    "title": "Kubernetes Pods, ReplicaSets, and Deployments in 5 Minutes",
+    "channel": "Containers from the Couch",
+    "durationSeconds": 297,
+    "query": "kubernetes pods replicasets deployments explained"
+  },
+  "prefetching-and-priority-hints": {
+    "videoId": "sF2P84kgXog",
+    "url": "https://www.youtube.com/watch?v=sF2P84kgXog",
+    "title": "Speed Up Your Website: Preload, Prefetch, Preconnect and More!",
+    "channel": "Elementive",
+    "durationSeconds": 400,
+    "query": "resource hints preload prefetch priority hints web performance"
+  },
+  "profiling-with-react-devtools": {
+    "videoId": "Qwb-Za6cBws",
+    "url": "https://www.youtube.com/watch?v=Qwb-Za6cBws",
+    "title": "How To Maximize Performance In Your React Apps",
+    "channel": "Web Dev Simplified",
+    "durationSeconds": 778,
+    "query": "React DevTools profiler tutorial flame graph"
+  },
+  "project-references-and-monorepos": {
+    "videoId": "RRsttfhg1sA",
+    "url": "https://www.youtube.com/watch?v=RRsttfhg1sA",
+    "title": "The Dilemma of TypeScript in Monorepos",
+    "channel": "Ahmed Elsakaan",
+    "durationSeconds": 885,
+    "query": "typescript project references monorepo build setup"
+  },
+  "prompting-fundamentals": {
+    "videoId": "sW5xoicq5TY",
+    "url": "https://www.youtube.com/watch?v=sW5xoicq5TY",
+    "title": "Zero-shot, One-shot and Few-shot Prompting Explained | Prompt Engineering 101",
+    "channel": "Analytics Vidhya",
+    "durationSeconds": 226,
+    "query": "prompt engineering fundamentals system prompt few shot"
+  },
+  "prompting-with-retrieved-context": {
+    "videoId": "00Q0G84kq3M",
+    "url": "https://www.youtube.com/watch?v=00Q0G84kq3M",
+    "title": "RAG vs. Fine Tuning",
+    "channel": "IBM Technology",
+    "durationSeconds": 537,
+    "query": "rag prompt template context grounding instructions"
+  },
+  "query-rewriting-and-expansion": {
+    "videoId": "JChPi0CRnDY",
+    "url": "https://www.youtube.com/watch?v=JChPi0CRnDY",
+    "title": "RAG from scratch: Part 5 (Query Translation -- Multi Query)",
+    "channel": "LangChain",
+    "durationSeconds": 369,
+    "query": "query rewriting expansion rag multi query retrieval"
+  },
+  "rate-limiting-and-abuse-prevention": {
+    "videoId": "fpichHcR2qw",
+    "url": "https://www.youtube.com/watch?v=fpichHcR2qw",
+    "title": "Master API Rate Limiting & Throttling in .NET 10 | Step-by-Step Guide",
+    "channel": "Frontend to Backend with Rohan",
+    "durationSeconds": 1070,
+    "query": "api rate limiting throttling implementation tutorial"
+  },
+  "re-ranking-results": {
+    "videoId": "T5lGpmAIAcw",
+    "url": "https://www.youtube.com/watch?v=T5lGpmAIAcw",
+    "title": "Day 37 : How to Fine-Tune Re-Ranking Models: A Step-by-Step Guide to Cross-Encoders",
+    "channel": "Cloud and Coffee with Navnit",
+    "durationSeconds": 286,
+    "query": "cross encoder reranking search results tutorial"
+  },
+  "readiness-and-liveness-probes": {
+    "videoId": "fqfieWP1jY4",
+    "url": "https://www.youtube.com/watch?v=fqfieWP1jY4",
+    "title": "Kubernetes Health Checks: Liveness vs. Readiness vs. Startup Probe",
+    "channel": "Anton Putra",
+    "durationSeconds": 155,
+    "query": "kubernetes liveness readiness startup probes explained"
+  },
+  "reading-a-flame-graph": {
+    "videoId": "ALXw2QRtzsE",
+    "url": "https://www.youtube.com/watch?v=ALXw2QRtzsE",
+    "title": "How to Read a Chrome Flame Chart (Without Getting Lost)",
+    "channel": "I Code It",
+    "durationSeconds": 1147,
+    "query": "chrome devtools performance flame chart long tasks"
+  },
+  "reading-and-writing-csv-and-json": {
+    "videoId": "q5uM4VKywbA",
+    "url": "https://www.youtube.com/watch?v=q5uM4VKywbA",
+    "title": "Python Tutorial: CSV Module - How to Read, Parse, and Write CSV Files",
+    "channel": "Corey Schafer",
+    "durationSeconds": 972,
+    "query": "python csv json file handling tutorial"
+  },
+  "reading-explain-analyze": {
+    "videoId": "O7AzUDogXsw",
+    "url": "https://www.youtube.com/watch?v=O7AzUDogXsw",
+    "title": "SQL Execution Plans (Visually Explained) | SQL Hints | #SQL Course 40",
+    "channel": "Data with Baraa",
+    "durationSeconds": 1936,
+    "query": "postgresql explain analyze tutorial reading query plans"
+  },
+  "reading-logs-and-events": {
+    "videoId": "5pGIyQzTCEA",
+    "url": "https://www.youtube.com/watch?v=5pGIyQzTCEA",
+    "title": "Kubernetes CrashLoopBackOff | Scenario-Based DevOps Interview Question #2",
+    "channel": "TechCafe",
+    "durationSeconds": 277,
+    "query": "kubectl logs events describe debugging pods"
+  },
+  "request-memoization-and-the-data-cache": {
+    "videoId": "Lhwcs3qLUsE",
+    "url": "https://www.youtube.com/watch?v=Lhwcs3qLUsE",
+    "title": "Request Memoization Explained | Next.js Caching Mechanism",
+    "channel": "Debug With Abir",
+    "durationSeconds": 376,
+    "query": "Next.js caching data cache request memoization explained"
+  },
+  "request-validation": {
+    "videoId": "O0OkcpfkflQ",
+    "url": "https://www.youtube.com/watch?v=O0OkcpfkflQ",
+    "title": "Zod Input Validation in Node.js (Beginner Tutorial)",
+    "channel": "Ben Swordfire",
+    "durationSeconds": 279,
+    "query": "api request validation node zod schema tutorial"
+  },
+  "requests-limits-and-quality-of-service": {
+    "videoId": "lKH1K5R3kqg",
+    "url": "https://www.youtube.com/watch?v=lKH1K5R3kqg",
+    "title": "All You Need to Know in 12 Minutes: Pods' Requests and Limits in Kubernetes",
+    "channel": "The Good Guy",
+    "durationSeconds": 760,
+    "query": "kubernetes resource requests limits qos oomkilled"
+  },
+  "revalidation-time-based-and-on-demand": {
+    "videoId": "-mPm2IRkacM",
+    "url": "https://www.youtube.com/watch?v=-mPm2IRkacM",
+    "title": "On-demand revalidation in NextJs 14",
+    "channel": "Hamed Bahram",
+    "durationSeconds": 1017,
+    "query": "Next.js revalidatePath revalidateTag on demand revalidation"
+  },
+  "rolling-updates-and-rollbacks": {
+    "videoId": "78s-fW-zv6E",
+    "url": "https://www.youtube.com/watch?v=78s-fW-zv6E",
+    "title": "Kubernetes Rolling Updates Explained | Zero-Downtime Deployments Tutorial",
+    "channel": "CodeLucky",
+    "durationSeconds": 317,
+    "query": "kubernetes rolling update strategy rollback zero downtime"
+  },
+  "route-groups-and-parallel-routes": {
+    "videoId": "zDZBKEvU8b0",
+    "url": "https://www.youtube.com/watch?v=zDZBKEvU8b0",
+    "title": "Learn Next.js Intercepting Routes In 11 Minutes",
+    "channel": "Web Dev Simplified",
+    "durationSeconds": 668,
+    "query": "Next.js route groups parallel routes intercepting routes"
+  },
+  "routing-and-middleware": {
+    "videoId": "lY6icfhap2o",
+    "url": "https://www.youtube.com/watch?v=lY6icfhap2o",
+    "title": "Learn Express Middleware In 14 Minutes",
+    "channel": "Web Dev Simplified",
+    "durationSeconds": 888,
+    "query": "node express routing middleware tutorial"
+  },
+  "running-your-first-container": {
+    "videoId": "p2PH_YPCsis",
+    "url": "https://www.youtube.com/watch?v=p2PH_YPCsis",
+    "title": "Docker Volumes explained in 6 minutes",
+    "channel": "TechWorld with Nana",
+    "durationSeconds": 363,
+    "query": "docker run command tutorial beginners ports volumes"
+  },
+  "runtime-validation-with-zod": {
+    "videoId": "9UVPk0Ulm6U",
+    "url": "https://www.youtube.com/watch?v=9UVPk0Ulm6U",
+    "title": "Zod Makes TypeScript Even Better",
+    "channel": "Web Dev Simplified",
+    "durationSeconds": 434,
+    "query": "zod typescript schema validation tutorial"
+  },
+  "services-and-cluster-networking": {
+    "videoId": "T4Z7visMM4E",
+    "url": "https://www.youtube.com/watch?v=T4Z7visMM4E",
+    "title": "Kubernetes Services explained | ClusterIP vs NodePort vs LoadBalancer vs Headless Service",
+    "channel": "TechWorld with Nana",
+    "durationSeconds": 1453,
+    "query": "kubernetes services clusterip nodeport loadbalancer explained"
+  },
+  "showing-intermediate-steps": {
+    "videoId": "JQjpAdqFviw",
+    "url": "https://www.youtube.com/watch?v=JQjpAdqFviw",
+    "title": "5 Models, Reasoning & Tool Calling Explained  How Real AI Agents Actually Work | #agentkit Series",
+    "channel": "Rhash-Algo",
+    "durationSeconds": 607,
+    "query": "ai agent ui showing reasoning steps tool calls"
+  },
+  "slimming-and-securing-images": {
+    "videoId": "8gvKm5_L95Y",
+    "url": "https://www.youtube.com/watch?v=8gvKm5_L95Y",
+    "title": "Episode 05 | Container Security for DevSecOps | Non-Root, Distroless, Trivy, OSV Scanner",
+    "channel": "Yash Academy",
+    "durationSeconds": 3586,
+    "query": "docker image security non root user distroless scanning"
+  },
+  "state-colocation-and-lifting": {
+    "videoId": "Kvw0M0upCrI",
+    "url": "https://www.youtube.com/watch?v=Kvw0M0upCrI",
+    "title": "Lifting State up in ReactJs Tutorial #24 | Complete React Course",
+    "channel": "The Humble Coder",
+    "durationSeconds": 598,
+    "query": "react state colocation lifting state up performance"
+  },
+  "streaming-responses-to-the-browser": {
+    "videoId": "hOAAg1WaZh8",
+    "url": "https://www.youtube.com/watch?v=hOAAg1WaZh8",
+    "title": "Streaming in React the Simple Way: Server-Sent Events (with FastAPI)",
+    "channel": "Techno Pain",
+    "durationSeconds": 536,
+    "query": "streaming llm response server sent events tutorial"
+  },
+  "streaming-with-suspense-boundaries": {
+    "videoId": "xTT_Sd_xqh0",
+    "url": "https://www.youtube.com/watch?v=xTT_Sd_xqh0",
+    "title": "Next.js Streaming Tutorial — SSR, React Suspense & Loading Skeleton in Next.js 15",
+    "channel": "logicBase Labs",
+    "durationSeconds": 1540,
+    "query": "React Suspense streaming server rendering Next.js"
+  },
+  "strict-mode-migration-strategy": {
+    "videoId": "EyGYscO4E9U",
+    "url": "https://www.youtube.com/watch?v=EyGYscO4E9U",
+    "title": "TypeScript in Production: Migration, Performance & Pitfalls",
+    "channel": "Sukrid LearnHub",
+    "durationSeconds": 832,
+    "query": "typescript strict mode migration javascript codebase"
+  },
+  "structural-typing-and-assignability": {
+    "videoId": "gu-smF0OJSs",
+    "url": "https://www.youtube.com/watch?v=gu-smF0OJSs",
+    "title": "TypeScript Syntax Explained for Beginners | Statements, Comments & Errors",
+    "channel": "ProgramGuru",
+    "durationSeconds": 694,
+    "query": "typescript structural typing assignability explained"
+  },
+  "structured-output-and-json-schemas": {
+    "videoId": "gMeTK6zzaO4",
+    "url": "https://www.youtube.com/watch?v=gMeTK6zzaO4",
+    "title": "LLM Function Calling - AI Tools Deep Dive",
+    "channel": "Adam Lucek",
+    "durationSeconds": 1874,
+    "query": "llm structured output json schema function calling"
+  },
+  "tables-types-and-constraints": {
+    "videoId": "5G53W8F2pSE",
+    "url": "https://www.youtube.com/watch?v=5G53W8F2pSE",
+    "title": "PostgreSQL Data Types & Constraints Explained | Complete Beginner Guide",
+    "channel": "Data_Analytics_Learn_More",
+    "durationSeconds": 1679,
+    "query": "postgresql data types constraints tutorial"
+  },
+  "tagging-and-registries": {
+    "videoId": "euJPx0QGUR4",
+    "url": "https://www.youtube.com/watch?v=euJPx0QGUR4",
+    "title": "3. Docker Container Registry Tutorial | Build, Tag, Push & Pull Images to Docker Hub",
+    "channel": "TechMentor",
+    "durationSeconds": 1484,
+    "query": "docker registry tagging push pull images tutorial"
+  },
+  "testing-an-api": {
+    "videoId": "FKnzS_icp20",
+    "url": "https://www.youtube.com/watch?v=FKnzS_icp20",
+    "title": "Testing Node Server with Jest and Supertest",
+    "channel": "Sam Meech-Ward",
+    "durationSeconds": 705,
+    "query": "api testing integration tests node supertest tutorial"
+  },
+  "the-knowledge-cutoff-problem": {
+    "videoId": "AThIFbWt9LA",
+    "url": "https://www.youtube.com/watch?v=AThIFbWt9LA",
+    "title": "Limitations of GenAI: Hallucinations, Nondeterminism, and Cutoff Dates",
+    "channel": "Cloud Explainers",
+    "durationSeconds": 493,
+    "query": "llm knowledge cutoff hallucination retrieval explained"
+  },
+  "tls-and-certificates": {
+    "videoId": "vWtEYMTfnts",
+    "url": "https://www.youtube.com/watch?v=vWtEYMTfnts",
+    "title": "Add HTTPS to Kubernetes 🔥 cert-manager + Ingress (Full Guide)",
+    "channel": "DevByRaghav",
+    "durationSeconds": 1820,
+    "query": "kubernetes tls certificates cert-manager ingress https"
+  },
+  "tool-calling-basics": {
+    "videoId": "h8gMhXYAv1k",
+    "url": "https://www.youtube.com/watch?v=h8gMhXYAv1k",
+    "title": "What is Tool Calling? Connecting LLMs to Your Data",
+    "channel": "IBM Technology",
+    "durationSeconds": 297,
+    "query": "llm tool calling function calling tutorial"
+  },
+  "transactions-and-isolation-levels": {
+    "videoId": "G8wDjV0N9tk",
+    "url": "https://www.youtube.com/watch?v=G8wDjV0N9tk",
+    "title": "Transaction Isolation Levels With PostgreSQL as an example",
+    "channel": "mkdev",
+    "durationSeconds": 498,
+    "query": "postgresql transaction isolation levels mvcc explained"
+  },
+  "tsconfig-options-that-matter": {
+    "videoId": "eJXVEju3XLM",
+    "url": "https://www.youtube.com/watch?v=eJXVEju3XLM",
+    "title": "The TSConfig Cheat Sheet",
+    "channel": "Matt Pocock",
+    "durationSeconds": 336,
+    "query": "typescript tsconfig explained target module moduleResolution"
+  },
+  "typing-async-boundaries-and-api-responses": {
+    "videoId": "cdx5jiypFJc",
+    "url": "https://www.youtube.com/watch?v=cdx5jiypFJc",
+    "title": "Robust Fetch Utility in TypeScript: Handling Errors, Caching, and Timeouts",
+    "channel": "SmartWebKit",
+    "durationSeconds": 2174,
+    "query": "typescript typing fetch api response error handling"
+  },
+  "unions-intersections-and-narrowing": {
+    "videoId": "o0v7lJF11Pg",
+    "url": "https://www.youtube.com/watch?v=o0v7lJF11Pg",
+    "title": "Discriminated Unions or Tagged Unions Types - TypeScript Narrowing #4",
+    "channel": "Lucas Paganini",
+    "durationSeconds": 198,
+    "query": "typescript narrowing type guards discriminated unions"
+  },
+  "unknown-never-and-the-any-escape-hatch": {
+    "videoId": "kWmUNChlzVw",
+    "url": "https://www.youtube.com/watch?v=kWmUNChlzVw",
+    "title": "any vs unknown vs never: TypeScript demystified",
+    "channel": "Andrew Burgess",
+    "durationSeconds": 481,
+    "query": "typescript unknown vs any never type explained"
+  },
+  "values-types-and-variables": {
+    "videoId": "LKFrQXaoSMQ",
+    "url": "https://www.youtube.com/watch?v=LKFrQXaoSMQ",
+    "title": "Python variables for beginners ❎",
+    "channel": "Bro Code",
+    "durationSeconds": 811,
+    "query": "python variables data types tutorial for beginners"
+  },
+  "vector-stores-and-indexes": {
+    "videoId": "9NvO-VdjY80",
+    "url": "https://www.youtube.com/watch?v=9NvO-VdjY80",
+    "title": "Exact vs Approximate (HNSW) Nearest Neighbors in Vector Databases",
+    "channel": "Redis",
+    "durationSeconds": 370,
+    "query": "vector database index hnsw approximate nearest neighbor"
+  },
+  "volumes-and-persistent-data": {
+    "videoId": "iOcGcimIX7w",
+    "url": "https://www.youtube.com/watch?v=iOcGcimIX7w",
+    "title": "Docker Data Persistence Guide | Bind Mounts vs Volumes",
+    "channel": "opsnotecloud",
+    "durationSeconds": 589,
+    "query": "docker volumes bind mounts persistent data tutorial"
+  },
+  "when-rag-is-the-wrong-answer": {
+    "videoId": "UabBYexBD4k",
+    "url": "https://www.youtube.com/watch?v=UabBYexBD4k",
+    "title": "Is RAG Still Needed? Choosing the Best Approach for LLMs",
+    "channel": "IBM Technology",
+    "durationSeconds": 670,
+    "query": "when not to use rag alternatives long context"
+  },
+  "why-components-re-render": {
+    "videoId": "AwW7olQ84Qs",
+    "url": "https://www.youtube.com/watch?v=AwW7olQ84Qs",
+    "title": "Things you didn't know about re-rendering in React",
+    "channel": "Code Sketched",
+    "durationSeconds": 280,
+    "query": "why react components re-render explained state props"
+  },
+  "writing-a-dockerfile": {
+    "videoId": "DQdB7wFEygo",
+    "url": "https://www.youtube.com/watch?v=DQdB7wFEygo",
+    "title": "The Only Docker Tutorial You Need To Get Started",
+    "channel": "The Coding Sloth",
+    "durationSeconds": 713,
+    "query": "dockerfile tutorial best practices beginners"
+  },
+  "writing-your-first-generic": {
+    "videoId": "EcCTIExsqmI",
+    "url": "https://www.youtube.com/watch?v=EcCTIExsqmI",
+    "title": "Learn TypeScript Generics In 13 Minutes",
+    "channel": "Web Dev Simplified",
+    "durationSeconds": 772,
+    "query": "typescript generics tutorial for beginners"
+  },
+  "writing-your-first-server-action": {
+    "videoId": "NWx8oVLEdwE",
+    "url": "https://www.youtube.com/watch?v=NWx8oVLEdwE",
+    "title": "Next.js Server Actions vs API Routes: The Final Answer for 2025",
+    "channel": "Tobi Mey",
+    "durationSeconds": 442,
+    "query": "Next.js server actions tutorial use server"
+  },
+  "zero-downtime-migrations": {
+    "videoId": "cw5K2O4AHJc",
+    "url": "https://www.youtube.com/watch?v=cw5K2O4AHJc",
+    "title": "How do software projects achieve zero downtime database migrations?",
+    "channel": "Web Dev Cody",
+    "durationSeconds": 426,
+    "query": "zero downtime database migration postgres expand contract"
+  }
+}

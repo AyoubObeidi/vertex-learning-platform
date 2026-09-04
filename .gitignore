@@ -50,3 +50,6 @@ next-env.d.ts
 /studio/dist/
 /studio/.sanity/
 /studio/schema.json
+
+# seed build output
+studio/seed/dist/
