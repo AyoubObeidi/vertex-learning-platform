@@ -1,7 +1,10 @@
+"use client";
+
 import { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { BarChart3, Clock, ExternalLink, FileText, PlayCircle } from "lucide-react";
+import posthog from "posthog-js";
 import { Badge } from "./Badge";
 
 /** A cover image already resolved to a URL, so this file stays Sanity-agnostic. */
@@ -98,6 +101,14 @@ export function CourseCard({
     <Link
       href={href}
       className={`${shell} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
+      onClick={() =>
+        posthog.capture("course_card_clicked", {
+          course_title: title,
+          course_level: level,
+          course_duration: duration,
+          course_modules: modules,
+        })
+      }
     >
       {body}
     </Link>

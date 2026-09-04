@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BarChart3, Bookmark, Clock, FileText, Users } from "lucide-react";
+import posthog from "posthog-js";
 
 import type { COURSE_BY_SLUG_QUERY_RESULT } from "@/sanity.types";
 import { urlFor } from "@/sanity/lib/image";
@@ -104,6 +107,14 @@ export function CourseHero({
             <Link
               href={`/lessons/${firstLessonSlug}`}
               className="inline-flex h-[58px] items-center justify-center gap-3 rounded-[10px] bg-accent px-7 text-[16px] font-medium text-white transition-colors hover:brightness-95"
+              onClick={() =>
+                posthog.capture("course_started", {
+                  course_title: course.title,
+                  course_slug: course.slug,
+                  course_level: formatLevel(course.level),
+                  first_lesson_slug: firstLessonSlug,
+                })
+              }
             >
               Start Learning
               <ArrowRight size={18} strokeWidth={2} />
@@ -112,6 +123,13 @@ export function CourseHero({
           <button
             type="button"
             className="inline-flex h-[58px] items-center justify-center gap-3 rounded-[10px] border border-line bg-surface px-7 text-[16px] font-medium text-neutral-900 transition-colors hover:bg-neutral-50"
+            onClick={() =>
+              posthog.capture("course_bookmarked", {
+                course_title: course.title,
+                course_slug: course.slug,
+                course_level: formatLevel(course.level),
+              })
+            }
           >
             <Bookmark size={18} strokeWidth={1.75} />
             Bookmark

@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 import Link from "next/link";
 import { ChevronDown, PlayCircle } from "lucide-react";
+import posthog from "posthog-js";
 
 import type { COURSE_BY_SLUG_QUERY_RESULT } from "@/sanity.types";
 import { formatDuration, pluralize } from "../../lib/format";
@@ -20,6 +21,7 @@ function ModuleRow({
   isLast,
   expanded,
   onToggle,
+  courseTitle,
 }: {
   module: CourseModule;
   index: number;
@@ -27,6 +29,7 @@ function ModuleRow({
   isLast: boolean;
   expanded: boolean;
   onToggle: () => void;
+  courseTitle?: string;
 }) {
   const panelId = useId();
   const duration = formatDuration(courseModule.durationSeconds);
@@ -51,7 +54,17 @@ function ModuleRow({
       <h3>
         <button
           type="button"
-          onClick={onToggle}
+          onClick={() => {
+            if (!expanded) {
+              posthog.capture("module_expanded", {
+                module_title: courseModule.title,
+                module_index: index + 1,
+                lesson_count: lessons.length,
+                course_title: courseTitle,
+              });
+            }
+            onToggle();
+          }}
           aria-expanded={expanded}
           aria-controls={panelId}
           className="flex w-full items-center gap-5 px-6 py-5 text-left transition-colors hover:bg-canvas sm:px-8"
@@ -96,6 +109,17 @@ function ModuleRow({
               <Link
                 href={`/lessons/${lesson.slug}`}
                 className="flex items-center gap-3 rounded-md py-2.5 text-[14px] text-neutral-700 transition-colors hover:text-accent"
+                onClick={() =>
+                  posthog.capture("lesson_clicked", {
+                    lesson_title: lesson.title,
+                    lesson_slug: lesson.slug,
+                    lesson_index: lessonIndex + 1,
+                    module_title: courseModule.title,
+                    module_index: index + 1,
+                    is_free_preview: lesson.freePreview ?? false,
+                    course_title: courseTitle,
+                  })
+                }
               >
                 <PlayCircle
                   size={16}
@@ -176,7 +200,14 @@ export function CourseContent({
         <div className="mt-5 flex justify-center">
           <button
             type="button"
-            onClick={() => setShowAll((current) => !current)}
+            onClick={() => {
+              const next = !showAll;
+              posthog.capture("show_all_modules_clicked", {
+                action: next ? "show_all" : "show_fewer",
+                total_modules: modules.length,
+              });
+              setShowAll(next);
+            }}
             className="inline-flex h-12 items-center gap-2 rounded-[10px] border border-line bg-surface px-6 text-[14px] font-medium text-neutral-900 transition-colors hover:bg-neutral-50"
           >
             {showAll

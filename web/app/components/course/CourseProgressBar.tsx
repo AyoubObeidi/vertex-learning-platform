@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import posthog from "posthog-js";
 
 /**
  * The sticky footer bar from the design. Presentational for now: learner
@@ -46,6 +49,12 @@ export function CourseProgressBar({
           <Link
             href={href}
             className="inline-flex h-[54px] shrink-0 items-center justify-center gap-3 rounded-[10px] bg-accent px-7 text-[15px] font-medium text-white transition-colors hover:brightness-95"
+            onClick={() =>
+              posthog.capture("course_progress_cta_clicked", {
+                action: started ? "continue_learning" : "start_learning",
+                progress_percent: clamped,
+              })
+            }
           >
             {started ? "Continue Learning" : "Start Learning"}
             <ArrowRight size={18} strokeWidth={2} />

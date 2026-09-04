@@ -1,4 +1,7 @@
+"use client";
+
 import { ArrowRight } from "lucide-react";
+import posthog from "posthog-js";
 import { Button } from "../ui/Button";
 import { TextInput } from "../ui/Input";
 
@@ -24,6 +27,7 @@ export function Hero() {
             variant="accent"
             size="lg"
             icon={<ArrowRight size={20} strokeWidth={2} />}
+            onClick={() => posthog.capture("explore_courses_clicked")}
           >
             Explore Courses
           </Button>
