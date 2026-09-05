@@ -141,10 +141,11 @@ export const COURSE_BY_SLUG_QUERY = defineQuery(/* groq */ `
  * The lesson plus the course that uses it, resolved by reverse reference since
  * a lesson does not store its parent.
  *
- * The course's modules come back as ordered lists of lesson ids. GROQ has no
- * index-of operator, so the caller derives the "Lesson 5.1" label by finding
- * this lesson's `_id` in `course.modules[].lessonIds` — module position + 1,
- * lesson position + 1.
+ * The whole course outline comes back with it, because the lesson page renders
+ * the course sidebar: every module, every module's lessons, and the durations
+ * the sidebar shows. GROQ has no index-of operator, so the caller derives the
+ * "Lesson 5.1" label and the previous/next links by finding this lesson's `_id`
+ * in `course.modules[].lessons[]._id` — module position + 1, lesson position + 1.
  */
 export const LESSON_BY_SLUG_QUERY = defineQuery(/* groq */ `
   *[_type == "lesson" && slug.current == $slug][0]{
@@ -164,12 +165,63 @@ export const LESSON_BY_SLUG_QUERY = defineQuery(/* groq */ `
       _id,
       title,
       "slug": slug.current,
+      level,
       coverImage{${imageFragment}},
       instructor->{_id, name, "slug": slug.current, photo{${imageFragment}}},
       modules[]{
         _key,
         title,
-        "lessonIds": lessons[]._ref
+        "durationSeconds": math::sum(lessons[]->durationSeconds),
+        lessons[]->{
+          _id,
+          title,
+          "slug": slug.current,
+          durationSeconds,
+          freePreview
+        }
+      }
+    }
+  }
+`)
+
+/* -------------------------------------------------------------------------- */
+/* Search                                                                     */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Resolves the lessons the search agent picked, by id.
+ *
+ * This is what grounds search (CLAUDE.md section 11). The model only ever
+ * returns lesson ids and a one-line description; every field a result card
+ * shows — title, course, label, duration, thumbnail — is read here, from the
+ * dataset. A lesson the model invented has no id that resolves, so it cannot
+ * reach the response.
+ *
+ * The course outline comes back id-only: enough to derive "Lesson 5.1" and the
+ * module title by array position, and nothing more. `notes` is projected solely
+ * so `deriveLessonDescription` has a fallback when the model's description is
+ * unusable — it is never sent to the model and never returned to the client.
+ */
+export const LESSONS_BY_IDS_QUERY = defineQuery(/* groq */ `
+  *[_type == "lesson" && _id in $ids]{
+    _id,
+    title,
+    "slug": slug.current,
+    videoUrl,
+    durationSeconds,
+    freePreview,
+    keyPoints,
+    notes,
+    poster{${imageFragment}},
+    "course": *[_type == "course" && references(^._id)][0]{
+      _id,
+      title,
+      "slug": slug.current,
+      coverImage{${imageFragment}},
+      modules[]{
+        _key,
+        title,
+        lessons[]->{_id}
       }
     }
   }

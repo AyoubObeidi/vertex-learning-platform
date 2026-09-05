@@ -3,10 +3,18 @@ import { Bell, ChevronRight } from "lucide-react";
 import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import { Logo } from "./Logo";
 
-export function TopNav() {
+export function TopNav({ width = "column" }: { width?: "column" | "full" }) {
+  // The catalog and course pages centre the nav over their 890px reading
+  // column. The lesson page is a full-bleed app shell, so its nav runs the whole
+  // width with the same page padding as the content beneath it.
+  const inner =
+    width === "full"
+      ? "w-full px-5 sm:h-25 sm:px-8"
+      : "mx-auto w-full max-w-[890px] px-5 sm:h-24 sm:px-0";
+
   return (
     <header className="w-full border-b border-line bg-canvas">
-      <nav className="mx-auto flex h-20 w-full max-w-[890px] items-center px-5 sm:h-24 sm:px-0">
+      <nav className={`flex h-20 items-center ${inner}`}>
         <Logo />
         <div className="hidden items-center gap-11 text-base font-medium text-neutral-900 sm:flex sm:ml-[63px]">
           <Link href="/courses" className="transition-colors hover:text-accent">

@@ -31,6 +31,14 @@ const nextConfig: NextConfig = {
         hostname: "cdn.sanity.io",
         pathname: "/images/**",
       },
+      // Lesson video stills. Seeded lessons carry no poster of their own, so the
+      // player frame falls back to the provider's thumbnail. Scoped to `/vi/**`
+      // so the image optimiser cannot be pointed at anything else on the host.
+      {
+        protocol: "https",
+        hostname: "i.ytimg.com",
+        pathname: "/vi/**",
+      },
     ],
   },
 };
