@@ -53,3 +53,4 @@ next-env.d.ts
 
 # seed build output
 studio/seed/dist/
+studio/context/dist/

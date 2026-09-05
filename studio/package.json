@@ -10,7 +10,9 @@
     "typegen": "sanity schemas extract --enforce-required-fields && sanity typegen generate",
     "seed:videos": "node seed/scripts/harvest-videos.mjs",
     "seed:build": "node seed/scripts/build-ndjson.mjs",
-    "seed:import": "node seed/scripts/import.mjs"
+    "seed:import": "node seed/scripts/import.mjs",
+    "context:build": "node context/build-context-ndjson.mjs",
+    "context:import": "node context/import-context.mjs"
   },
   "dependencies": {
     "@sanity/icons": "^3.8.0",
