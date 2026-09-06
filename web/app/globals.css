@@ -124,8 +124,9 @@ body {
    are fills sitting *behind* text (badges, hover states), not text themselves.
 
    `[data-theme="dark"]` is set by the inline script in the root layout before
-   first paint. The media query below is the no-JavaScript fallback, guarded so
-   an explicit Light choice always wins over the OS.
+   first paint, from the learner's stored choice alone. Dark is opt-in: there is
+   deliberately no `prefers-color-scheme` fallback, so a dark OS — and a visitor
+   with JavaScript off — still gets the light palette below.
    --------------------------------------------------------------------------- */
 
 /* The raw dark values, declared once so the two selectors below map rather
@@ -200,47 +201,6 @@ body {
   --shadow-xl: var(--d-shadow-xl);
 }
 
-/* With JavaScript on, the inline script in the root layout writes a concrete
-   `data-theme` before first paint — the learner's stored choice, or the OS on a
-   first visit — so the rule above does all the work. This block is the no-JS
-   fallback: follow the OS unless the reader has explicitly stored Light. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    color-scheme: dark;
-
-    --color-primary-500: var(--d-primary-500);
-    --color-primary-400: var(--d-primary-400);
-    --color-primary-300: var(--d-primary-300);
-    --color-primary-200: var(--d-primary-200);
-    --color-primary-100: var(--d-primary-100);
-
-    --color-neutral-900: var(--d-neutral-900);
-    --color-neutral-700: var(--d-neutral-700);
-    --color-neutral-500: var(--d-neutral-500);
-    --color-neutral-300: var(--d-neutral-300);
-    --color-neutral-200: var(--d-neutral-200);
-    --color-neutral-100: var(--d-neutral-100);
-    --color-neutral-50: var(--d-neutral-50);
-    --color-neutral-0: var(--d-neutral-0);
-
-    --color-success: var(--d-success);
-    --color-info: var(--d-info);
-
-    --color-lesson-100: var(--d-lesson-100);
-    --color-lesson-500: var(--d-lesson-500);
-
-    --color-canvas: var(--d-canvas);
-    --color-surface: var(--d-surface);
-    --color-line: var(--d-line);
-    --color-accent: var(--d-accent);
-
-    --shadow-sm: var(--d-shadow-sm);
-    --shadow-md: var(--d-shadow-md);
-    --shadow-lg: var(--d-shadow-lg);
-    --shadow-xl: var(--d-shadow-xl);
-  }
-}
-
 /* ---------------------------------------------------------------------------
    The theme toggle's two icons.
 
@@ -249,8 +209,8 @@ body {
    rendering it would mismatch on hydration and flash the wrong icon; this way
    the markup is identical on both sides.
 
-   The `:not([data-theme])` pair is the no-JavaScript case, and matches whatever
-   the `prefers-color-scheme` fallback above has painted.
+   The `:not([data-theme])` rule is the no-JavaScript case, and matches the light
+   palette that a page with no attribute paints.
    --------------------------------------------------------------------------- */
 
 .theme-choice {
@@ -261,14 +221,4 @@ body {
 [data-theme="dark"] .theme-choice-dark,
 :root:not([data-theme]) .theme-choice-light {
   display: inline-flex;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) .theme-choice-light {
-    display: none;
-  }
-
-  :root:not([data-theme]) .theme-choice-dark {
-    display: inline-flex;
-  }
 }

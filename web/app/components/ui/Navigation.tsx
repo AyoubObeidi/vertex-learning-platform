@@ -3,6 +3,7 @@ import { Bell, ChevronRight } from "lucide-react";
 import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import { ThemeToggle } from "../theme/ThemeToggle";
 import { Logo } from "./Logo";
+import { MobileNavMenu } from "./MobileNavMenu";
 
 export function TopNav({ width = "column" }: { width?: "column" | "full" }) {
   // The catalog and course pages centre the nav over their 890px reading
@@ -14,14 +15,15 @@ export function TopNav({ width = "column" }: { width?: "column" | "full" }) {
       : "mx-auto w-full max-w-[890px] px-5 sm:h-24 sm:px-0";
 
   return (
-    <header className="w-full border-b border-line bg-canvas">
+    // `relative` anchors the phone menu's panel, which hangs below the bar.
+    <header className="relative w-full border-b border-line bg-canvas">
       <nav className={`flex h-20 items-center ${inner}`}>
         <Link
           href="/"
           aria-label="Vertex home"
           className="rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-canvas"
         >
-          <Logo />
+          <Logo size="responsive" />
         </Link>
         <div className="hidden items-center gap-11 text-base font-medium text-neutral-900 sm:flex sm:ml-[63px]">
           <Link href="/courses" className="transition-colors hover:text-accent">
@@ -31,12 +33,14 @@ export function TopNav({ width = "column" }: { width?: "column" | "full" }) {
             My Learning
           </Link>
         </div>
-        <div className="ml-auto flex items-center gap-5">
+        {/* Below `sm` this cluster is what has to fit: the gaps tighten, the
+            bell moves into the phone menu, and the buttons shrink a step. */}
+        <div className="ml-auto flex items-center gap-2 sm:gap-5">
           <ThemeToggle />
           <button
             type="button"
             aria-label="Notifications"
-            className="text-neutral-900 transition-colors hover:text-accent"
+            className="hidden text-neutral-900 transition-colors hover:text-accent sm:block"
           >
             <Bell size={22} strokeWidth={1.75} />
           </button>
@@ -44,7 +48,7 @@ export function TopNav({ width = "column" }: { width?: "column" | "full" }) {
             <SignInButton mode="modal">
               <button
                 type="button"
-                className="text-base font-medium text-neutral-900 transition-colors hover:text-accent"
+                className="whitespace-nowrap text-sm font-medium text-neutral-900 transition-colors hover:text-accent sm:text-base"
               >
                 Sign in
               </button>
@@ -52,7 +56,7 @@ export function TopNav({ width = "column" }: { width?: "column" | "full" }) {
             <SignUpButton mode="modal">
               <button
                 type="button"
-                className="inline-flex h-11 items-center justify-center rounded-xl bg-accent px-4 text-sm font-medium text-white transition-colors hover:brightness-95"
+                className="inline-flex h-9 items-center justify-center whitespace-nowrap rounded-xl bg-accent px-3 text-sm font-medium text-white transition-colors hover:brightness-95 sm:h-11 sm:px-4"
               >
                 Sign up
               </button>
@@ -62,11 +66,12 @@ export function TopNav({ width = "column" }: { width?: "column" | "full" }) {
             <UserButton
               appearance={{
                 elements: {
-                  avatarBox: "h-[50px] w-[50px] border border-line",
+                  avatarBox: "h-10 w-10 border border-line sm:h-[50px] sm:w-[50px]",
                 },
               }}
             />
           </Show>
+          <MobileNavMenu />
         </div>
       </nav>
     </header>
