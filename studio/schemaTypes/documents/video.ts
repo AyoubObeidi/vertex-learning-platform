@@ -11,7 +11,8 @@ import {formatTimestamp} from '../objects/videoChapter'
  * These are an internal lookup, not content. Search reads them to resolve a
  * query to an exact second in a lesson's video; a learner never sees one as a
  * result. A lesson does not reference a video document — the two are joined on
- * `lesson.videoUrl == video.url`.
+ * the URL the lesson stores, which is `url` or any of the `urls` spellings of
+ * it.
  *
  * Every field here is written by the offline pipeline in `studio/videos/`. It
  * imports with `--replace`, so a hand edit in the Studio survives only until
@@ -59,7 +60,7 @@ export const video = defineType({
       title: 'Video URL',
       type: 'url',
       group: 'source',
-      description: 'Matches the `videoUrl` of every lesson that uses this video.',
+      description: 'The canonical URL for this video. Other spellings live in `urls`.',
       validation: (rule) => [
         rule.required().uri({scheme: ['http', 'https']}),
         rule
@@ -77,6 +78,16 @@ export const video = defineType({
           })
           .warning(),
       ],
+    }),
+    defineField({
+      name: 'urls',
+      title: 'All video URLs',
+      type: 'array',
+      group: 'source',
+      of: [defineArrayMember({type: 'url'})],
+      description:
+        'Every spelling of this video’s URL a lesson stores — youtu.be/<id>, watch?v=<id>, /embed/<id>. A lesson joins on the URL it holds, so one video reached two ways needs both. Always includes the URL above.',
+      validation: (rule) => rule.unique(),
     }),
     defineField({
       name: 'provider',

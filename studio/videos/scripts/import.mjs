@@ -15,34 +15,17 @@
  * documents in place rather than creating a second set.
  */
 import {spawnSync} from 'node:child_process'
-import {existsSync, readFileSync} from 'node:fs'
+import {existsSync} from 'node:fs'
 import {dirname, resolve} from 'node:path'
 import {fileURLToPath} from 'node:url'
 
+import {readStudioEnv, studioRoot} from '../../context/env.mjs'
+
 const here = dirname(fileURLToPath(import.meta.url))
-const studioRoot = resolve(here, '../..')
 const ndjson = resolve(here, '../dist/vertex-videos.ndjson')
 
-/** Minimal KEY=value reader — enough for the two values we need. */
-function readEnvFile(path) {
-  if (!existsSync(path)) return {}
-  const values = {}
-  for (const line of readFileSync(path, 'utf8').split(/\r?\n/)) {
-    const match = /^\s*([A-Z0-9_]+)\s*=\s*(.*)$/.exec(line)
-    if (!match) continue
-    values[match[1]] = match[2].trim().replace(/^["']|["']$/g, '')
-  }
-  return values
-}
+const {projectId, dataset} = readStudioEnv()
 
-const fileEnv = readEnvFile(resolve(studioRoot, '.env'))
-const dataset = process.env.SANITY_STUDIO_DATASET || fileEnv.SANITY_STUDIO_DATASET
-const projectId = process.env.SANITY_STUDIO_PROJECT_ID || fileEnv.SANITY_STUDIO_PROJECT_ID
-
-if (!dataset || !projectId) {
-  console.error('Missing SANITY_STUDIO_DATASET or SANITY_STUDIO_PROJECT_ID (studio/.env).')
-  process.exit(1)
-}
 if (!existsSync(ndjson)) {
   console.error('Missing dist/vertex-videos.ndjson. Run: npm run videos:build')
   process.exit(1)

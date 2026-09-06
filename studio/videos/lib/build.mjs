@@ -30,12 +30,17 @@ function keyAt(prefix, startSeconds) {
 export function buildVideoDocument(entry, override) {
   const authored = Array.isArray(override) ? override : undefined
 
+  // An authored chapter with no label is an editing slip in chapters.json, and
+  // the provider's own are already label-guarded by `normaliseChapters`. Dropped
+  // rather than coerced: a chapter labelled "undefined" is worse than no chapter,
+  // because search matches chapter labels first.
   const chapters = (authored ?? entry.chapters ?? [])
+    .filter((chapter) => typeof chapter?.label === 'string' && chapter.label.trim() !== '')
     .map((chapter) => ({
       _type: 'videoChapter',
       _key: keyAt('ch', chapter.startSeconds),
       startSeconds: Math.trunc(chapter.startSeconds),
-      label: String(chapter.label).trim(),
+      label: chapter.label.trim(),
     }))
     .sort((a, b) => a.startSeconds - b.startSeconds)
 
@@ -52,11 +57,19 @@ export function buildVideoDocument(entry, override) {
   if (authored && authored.length > 0) chapterSource = 'authored'
   else if (chapters.length > 0) chapterSource = 'provider'
 
+  // Every spelling of this video's URL that a lesson actually stores, `url`
+  // first. A lesson is joined to its video on the URL it holds and nothing
+  // else (CLAUDE.md section 8), so one video reached by two spellings needs
+  // both here or the second lesson matches nothing. An entry cached before
+  // this field existed has only the one.
+  const urls = [...new Set([entry.url, ...(entry.urls ?? [])])]
+
   const document = {
     _id: entry.docId,
     _type: 'video',
     videoId: entry.videoId,
     url: entry.url,
+    urls,
     provider: entry.provider,
     captionSource: entry.captionSource ?? 'none',
     chapterSource,

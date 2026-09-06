@@ -253,12 +253,22 @@ function ResultList({
     );
   }
 
+  // Nothing matched. The band *is* the answer here, so it stands on its own —
+  // a toolbar offering to sort zero results is noise (CLAUDE.md section 11).
+  if (results.length === 0) {
+    return (
+      <div className="mt-9">
+        <BrowseCatalogBand query={query} />
+      </div>
+    );
+  }
+
   return (
     <>
       <Toolbar
         count={pluralize(outcome.data.resultCount, "result")}
         sort={sort}
-        disabled={results.length === 0}
+        disabled={false}
         onSortChange={onSortChange}
       />
       <div className="mt-4 flex flex-col gap-3">
@@ -277,6 +287,12 @@ function ResultList({
             />
           ),
         )}
+      </div>
+      {/* Under the results in the reference. Only ever shown once a search has
+          actually come back: during the skeleton or after a failure it would be
+          offering a way out of a page that has not finished answering yet. */}
+      <div className="mt-3">
+        <BrowseCatalogBand query={query} />
       </div>
     </>
   );
@@ -351,11 +367,6 @@ export function SearchExperience({ query }: { query: string }) {
           <PendingResults sort={sort} onSortChange={setSort} />
         ))}
 
-      {/* Under the results in the reference, and the whole answer when there are
-          none — the empty state CLAUDE.md section 11 asks for. */}
-      <div className="mt-3">
-        <BrowseCatalogBand query={query} />
-      </div>
     </div>
   );
 }

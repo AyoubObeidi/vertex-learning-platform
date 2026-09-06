@@ -61,7 +61,7 @@ export const INSTRUCTIONS = `Vertex is a learning platform. A course contains or
 
 ## Video moments
 
-- A \`video\` document is joined to a lesson on \`lesson.videoUrl == video.url\`. There is no reference between them, in either direction.
+- A \`video\` document is joined to a lesson on the URL the lesson stores. There is no reference between them, in either direction. One video can be spelled more than one way, so match both fields: \`*[_type == "video" && (url == ^.videoUrl || ^.videoUrl in urls)][0]\`.
 - A video document is **never a result**. It is a lookup that turns a query into a second inside a lesson's video. Only ever report a moment together with the lesson that uses that video.
 - Match \`chapters[].label\` first — chapter labels are clean, authored text. Only if no chapter matches, fall back to \`chunks[].text\`, which is raw transcript and noisy.
 - **Never project \`chapters\` or \`chunks\` wholesale.** A transcript is hundreds of chunks and returning one overflows the context window. Filter inside the array and take a handful: \`chunks[text match "cach*"][0...3]{startSeconds}\`.

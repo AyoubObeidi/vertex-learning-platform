@@ -79,9 +79,39 @@ const apiKey = assertValue(
   "Missing environment variable: OPENCODE_API_KEY",
 );
 
+/**
+ * The gateway to talk to, validated at module load alongside the key.
+ *
+ * `OPENCODE_API_KEY` is sent as a bearer token on every request, so the
+ * endpoint has to be one that cannot be read off the wire: an `http://`
+ * override — a proxy someone pointed at a local port, a copy-pasted example —
+ * would hand a billed credential to anything on the path. An override is
+ * allowed, plaintext is not, and the failure is a startup error naming the
+ * variable rather than a leak nobody notices.
+ */
+function resolveBaseUrl(): string {
+  const configured = process.env.OPENCODE_BASE_URL?.trim();
+  if (!configured) return DEFAULT_BASE_URL;
+
+  let url: URL;
+  try {
+    url = new URL(configured);
+  } catch {
+    throw new Error("OPENCODE_BASE_URL is not a valid URL.");
+  }
+
+  if (url.protocol !== "https:") {
+    throw new Error(
+      "OPENCODE_BASE_URL must be an https: URL — OPENCODE_API_KEY is sent with every request.",
+    );
+  }
+
+  return configured;
+}
+
 const opencode = createOpenAICompatible({
   name: "opencode",
-  baseURL: process.env.OPENCODE_BASE_URL || DEFAULT_BASE_URL,
+  baseURL: resolveBaseUrl(),
   apiKey,
   supportsStructuredOutputs: true,
 });

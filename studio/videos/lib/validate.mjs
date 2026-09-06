@@ -51,20 +51,27 @@ export function validateDocuments(documents) {
     if (idsSeen.has(document._id)) problems.push(`${document._id}: duplicate _id`)
     idsSeen.add(document._id)
 
-    if (urlsSeen.has(document.url)) {
-      problems.push(`${document._id}: duplicate url ${document.url}`)
+    // Every spelling this document answers to must round-trip to its own id, or
+    // the join from a lesson's videoUrl would land somewhere else — and no two
+    // documents may claim the same spelling, or it would land in both.
+    if (!Array.isArray(document.urls) || !document.urls.includes(document.url)) {
+      problems.push(`${document._id}: urls must list url (${document.url})`)
     }
-    urlsSeen.add(document.url)
 
-    // The url must round-trip to this document's own id, or the join from a
-    // lesson's videoUrl would land somewhere else.
-    const parsed = parseVideoUrl(document.url)
-    if (!parsed) {
-      problems.push(`${document._id}: url is not a recognised video URL (${document.url})`)
-    } else if (docIdFor(parsed) !== document._id) {
-      problems.push(`${document._id}: url resolves to ${docIdFor(parsed)}`)
-    } else if (parsed.provider !== document.provider) {
-      problems.push(`${document._id}: provider "${document.provider}" disagrees with its url`)
+    for (const url of new Set([document.url, ...(document.urls ?? [])])) {
+      if (urlsSeen.has(url)) {
+        problems.push(`${document._id}: duplicate url ${url}`)
+      }
+      urlsSeen.add(url)
+
+      const parsed = parseVideoUrl(url)
+      if (!parsed) {
+        problems.push(`${document._id}: url is not a recognised video URL (${url})`)
+      } else if (docIdFor(parsed) !== document._id) {
+        problems.push(`${document._id}: url ${url} resolves to ${docIdFor(parsed)}`)
+      } else if (parsed.provider !== document.provider) {
+        problems.push(`${document._id}: provider "${document.provider}" disagrees with ${url}`)
+      }
     }
 
     if (!PROVIDERS.has(document.provider)) {

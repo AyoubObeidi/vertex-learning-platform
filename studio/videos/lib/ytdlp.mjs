@@ -72,12 +72,19 @@ const COMMON_ARGS = ['--no-playlist', '--no-warnings', '--sleep-requests', '1']
 /**
  * `shell: true` is unavoidable on Windows — `yt-dlp` installs as a `.cmd`
  * shim, which spawn cannot execute directly — and it means arguments are
- * concatenated rather than escaped. So anything that could contain a space is
- * quoted here. URLs reaching this module are already parsed and
- * provider-checked; the output path is ours but may sit under a directory with
- * a space in its name.
+ * concatenated into one command line rather than escaped. So anything that
+ * could contain a space is quoted here.
+ *
+ * The quoting is only half the defence, because `cmd.exe` has no escape for a
+ * double quote inside a quoted argument: a `"` in a value would end the quoted
+ * run and hand the rest to the shell, whatever this function did with it. So a
+ * `"` is removed rather than escaped, and the real guarantee is upstream —
+ * `lib/video-id.mjs` pins each provider's id shape, so a URL reaching here
+ * cannot carry a quote or a metacharacter in the first place. The remaining
+ * values are ours: the output path (which may sit under a directory with a
+ * space in its name) and fixed literals like `en.*,en`.
  */
-const quote = (value) => `"${String(value).replace(/"/g, '\\"')}"`
+const quote = (value) => `"${String(value).replace(/"/g, '')}"`
 
 function run(runner, args) {
   const result = spawnSync(runner.command, [...runner.args, ...COMMON_ARGS, ...args], {

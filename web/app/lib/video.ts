@@ -43,23 +43,35 @@ export function toStartSeconds(
   return seconds;
 }
 
+/**
+ * Provider-native id shapes. The same three live in
+ * `studio/videos/lib/video-id.mjs`, which must agree with this module — change
+ * one, change the other. A parsed id goes straight into an embed URL, so an
+ * id that is not really an id is better rejected here than rendered as a frame
+ * the provider will refuse.
+ */
+const YOUTUBE_ID = /^[A-Za-z0-9_-]{11}$/;
+const BUNNY_LIBRARY = /^[0-9]+$/;
+const BUNNY_GUID = /^[A-Za-z0-9-]+$/;
+
 function youTubeId(url: URL): string | null {
   const host = url.hostname.replace(/^www\./, "");
+  let id: string | null = null;
 
   if (host === "youtu.be") {
-    const id = url.pathname.slice(1);
-    return id || null;
-  }
-
-  if (host === "youtube.com" || host === "m.youtube.com" || host === "youtube-nocookie.com") {
+    id = url.pathname.slice(1);
+  } else if (host === "youtube.com" || host === "m.youtube.com" || host === "youtube-nocookie.com") {
     const watchId = url.searchParams.get("v");
-    if (watchId) return watchId;
-    // /embed/<id>, /v/<id>, /shorts/<id>
-    const match = /^\/(?:embed|v|shorts)\/([^/]+)/.exec(url.pathname);
-    if (match) return match[1];
+    if (watchId) {
+      id = watchId;
+    } else {
+      // /embed/<id>, /v/<id>, /shorts/<id>
+      const match = /^\/(?:embed|v|shorts)\/([^/]+)/.exec(url.pathname);
+      if (match) id = match[1];
+    }
   }
 
-  return null;
+  return id && YOUTUBE_ID.test(id) ? id : null;
 }
 
 function vimeoId(url: URL): string | null {
@@ -75,7 +87,10 @@ function bunnyId(url: URL): string | null {
   if (!host.endsWith("mediadelivery.net") && !host.endsWith("b-cdn.net")) return null;
   // iframe.mediadelivery.net/embed/<libraryId>/<videoGuid>
   const match = /^\/(?:embed|play)\/([^/]+)\/([^/?#]+)/.exec(url.pathname);
-  return match ? `${match[1]}/${match[2]}` : null;
+  if (!match) return null;
+  const [, library, guid] = match;
+  if (!BUNNY_LIBRARY.test(library) || !BUNNY_GUID.test(guid)) return null;
+  return `${library}/${guid}`;
 }
 
 /** `null` for anything we cannot play, so the caller can show a real fallback. */

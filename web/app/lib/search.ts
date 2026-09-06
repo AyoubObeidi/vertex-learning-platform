@@ -238,6 +238,10 @@ type VerifiedMoment = { startSeconds: number; label: string | null };
 /**
  * Indexes the video documents by URL, then by second.
  *
+ * Every URL a document answers to gets an entry, not just its canonical one: a
+ * lesson is joined to its video on the URL it stores, and one video can be
+ * reached by more than one spelling of that URL (see `urls` on the schema).
+ *
  * The chapter wins when a second is both a chapter marker and a chunk boundary.
  * CLAUDE.md section 7 makes that a data rule rather than a prompt one — chapter
  * labels are authored and clean, transcript text is the noisier backstop — so
@@ -262,7 +266,9 @@ function indexMoments(
       });
     }
 
-    byUrl.set(video.url, bySecond);
+    for (const url of new Set([video.url, ...(video.urls ?? [])])) {
+      byUrl.set(url, bySecond);
+    }
   }
 
   return byUrl;

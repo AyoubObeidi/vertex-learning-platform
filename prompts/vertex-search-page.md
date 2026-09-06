@@ -465,7 +465,7 @@ the dataset.
 10. Press `⌘K` (or `Ctrl+K`) anywhere on the page — the field focuses.
 11. Search for something absurd (`"underwater basket weaving"`). Confirm the
     empty state: no cards, the band, and a `reply` that says nothing was found.
-12. Stop the dev server's OpenAI access (unset `OPENAI_API_KEY` and restart) and
+12. Stop the dev server's model access (unset `OPENCODE_API_KEY` and restart) and
     search. Confirm a plain error message with a retry button, and that the
     browser response body contains no provider detail.
 13. From the home page, type into the hero field and press Enter — it lands on

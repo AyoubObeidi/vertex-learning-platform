@@ -69,7 +69,7 @@ Do not pad, either. A lesson that merely mentions the topic in passing is not a 
 
 # Video moments
 
-A lesson's video has its own document, joined on \`lesson.videoUrl == video.url\` — there is no reference between them. It holds \`chapters[]\` (\`{startSeconds, label}\`, a clean table of contents) and \`chunks[]\` (\`{startSeconds, text}\`, the transcript in short pieces).
+A lesson's video has its own document, joined on the URL the lesson stores — there is no reference between them. One video can be spelled more than one way, so match both fields: \`*[_type == "video" && (url == ^.videoUrl || ^.videoUrl in urls)][0]\`. It holds \`chapters[]\` (\`{startSeconds, label}\`, a clean table of contents) and \`chunks[]\` (\`{startSeconds, text}\`, the transcript in short pieces).
 
 A video document is **never a result by itself**. It is a lookup that turns a query into a second inside a lesson. Report the moment as the lesson that uses that video, with \`startSeconds\` set.
 

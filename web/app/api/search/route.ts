@@ -59,6 +59,22 @@ const PROVIDER = "opencode";
 const MAX_STEPS = 12;
 
 /**
+ * One deadline for the whole flow, not a per-call one.
+ *
+ * A search is an agentic loop over a free-tier gateway: any single step can
+ * stall, and `MAX_STEPS` bounds how many steps there are, not how long they
+ * take. Without a deadline a stalled provider holds a request, its MCP
+ * connection, and a rate-limit slot open indefinitely. Both model calls share
+ * this signal, so the repair pass cannot extend a search that has already run
+ * out of time, and an expiry lands in the same `catch` as any other failure —
+ * the learner gets the same safe message.
+ */
+const SEARCH_DEADLINE_MS = 90_000;
+
+/** How long a hung MCP connection may delay the response it is being closed for. */
+const MCP_CLOSE_TIMEOUT_MS = 2_000;
+
+/**
  * The nudge for the repair pass. It asks only for a change of shape — the
  * lessons were already found, and inventing new ones here would be caught by
  * the same id lookup as anywhere else.
@@ -175,6 +191,7 @@ export async function POST(request: Request): Promise<Response> {
   const startedAt = Date.now();
 
   let mcpClient: MCPClient | null = null;
+  const deadline = AbortSignal.timeout(SEARCH_DEADLINE_MS);
 
   try {
     const [client, initialContext] = await Promise.all([
@@ -204,6 +221,7 @@ export async function POST(request: Request): Promise<Response> {
       prompt: query,
       tools,
       stopWhen: isStepCount(MAX_STEPS),
+      abortSignal: deadline,
     });
 
     // Deliberately *not* `Output.object` on the call above. Forcing a JSON
@@ -227,6 +245,7 @@ export async function POST(request: Request): Promise<Response> {
           { role: "user", content: REPAIR_PROMPT },
         ],
         output: Output.object({ schema: SearchModelOutputSchema }),
+        abortSignal: deadline,
       });
       output = repaired.output;
     }
@@ -277,7 +296,15 @@ export async function POST(request: Request): Promise<Response> {
     console.error("[api/search] failed", error);
     return Response.json({ error: "Search is unavailable right now." }, { status: 500 });
   } finally {
-    // An HTTP MCP client left open leaks a connection per request.
-    await mcpClient?.close();
+    // An HTTP MCP client left open leaks a connection per request — but a close
+    // that never settles would hold the response open just as surely, which is
+    // exactly the state a deadline expiry leaves this in. Raced, so the worst
+    // case is a dropped connection rather than a hung request.
+    if (mcpClient) {
+      await Promise.race([
+        mcpClient.close().catch(() => {}),
+        new Promise((resolve) => setTimeout(resolve, MCP_CLOSE_TIMEOUT_MS)),
+      ]);
+    }
   }
 }

@@ -245,8 +245,9 @@ export const LESSONS_BY_IDS_QUERY = defineQuery(/* groq */ `
  * becomes the moment's name when one matches.
  */
 export const VIDEO_MOMENTS_QUERY = defineQuery(/* groq */ `
-  *[_type == "video" && url in $urls]{
+  *[_type == "video" && (url in $urls || count(urls[@ in $urls]) > 0)]{
     url,
+    urls,
     durationSeconds,
     "chapters": chapters[startSeconds in $seconds]{startSeconds, label},
     "chunks": chunks[startSeconds in $seconds]{startSeconds}

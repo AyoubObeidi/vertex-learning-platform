@@ -22,6 +22,7 @@ import {existsSync, mkdirSync, readFileSync, writeFileSync} from 'node:fs'
 import {dirname, resolve} from 'node:path'
 import {fileURLToPath} from 'node:url'
 
+import {readStudioEnv} from '../../context/env.mjs'
 import {chunksFromCues, cuesFromJson3, normaliseChapters} from '../lib/transcript.mjs'
 import {canonicalUrl, docIdFor, parseVideoUrl} from '../lib/video-id.mjs'
 import {fetchCaptions, probeVideo, resolveYtDlp} from '../lib/ytdlp.mjs'
@@ -77,18 +78,6 @@ async function withBackoff(attempt) {
   return result
 }
 
-/** Minimal KEY=value reader, mirroring seed/scripts/import.mjs. */
-function readEnvFile(path) {
-  if (!existsSync(path)) return {}
-  const values = {}
-  for (const line of readFileSync(path, 'utf8').split(/\r?\n/)) {
-    const match = /^\s*([A-Z0-9_]+)\s*=\s*(.*)$/.exec(line)
-    if (!match) continue
-    values[match[1]] = match[2].trim().replace(/^["']|["']$/g, '')
-  }
-  return values
-}
-
 /**
  * The video URLs actually in use, read from the dataset.
  *
@@ -98,13 +87,7 @@ function readEnvFile(path) {
  * what those are.
  */
 function urlsFromDataset() {
-  const fileEnv = readEnvFile(resolve(studioRoot, '.env'))
-  const dataset = process.env.SANITY_STUDIO_DATASET || fileEnv.SANITY_STUDIO_DATASET
-  const projectId = process.env.SANITY_STUDIO_PROJECT_ID || fileEnv.SANITY_STUDIO_PROJECT_ID
-
-  if (!dataset || !projectId) {
-    throw new Error('Missing SANITY_STUDIO_DATASET or SANITY_STUDIO_PROJECT_ID (studio/.env).')
-  }
+  const {projectId, dataset} = readStudioEnv()
 
   const query = "array::unique(*[_type == 'lesson' && defined(videoUrl)].videoUrl)"
   const result = spawnSync(
@@ -135,6 +118,26 @@ function urlsFromSeed() {
   return [...new Set(Object.values(mapping).map((entry) => entry.url))]
 }
 
+/**
+ * Adds any URL spelling missing from an already-cached entry, in place.
+ *
+ * Never fails the run: an unreadable cache file is the fetch path's problem to
+ * report, not this one's.
+ */
+function mergeCachedUrls(cachePath, urls) {
+  try {
+    const entry = JSON.parse(readFileSync(cachePath, 'utf8'))
+    const known = new Set(entry.urls ?? [entry.url])
+    const before = known.size
+    for (const url of urls) known.add(url)
+    if (known.size === before) return
+    entry.urls = [...known]
+    writeFileSync(cachePath, `${JSON.stringify(entry, null, 2)}\n`, 'utf8')
+  } catch {
+    // Leave it; the next --refresh rewrites the file wholesale.
+  }
+}
+
 async function main() {
   const sourceUrls = FROM_SEED ? urlsFromSeed() : urlsFromDataset()
   console.log(`${sourceUrls.length} unique video URL(s) from ${FROM_SEED ? 'seed/videos.json' : 'the dataset'}\n`)
@@ -150,9 +153,16 @@ async function main() {
   let fetched = 0
   let skipped = 0
 
-  // Parse and de-duplicate first, so the counts printed below are honest.
+  // Parse and group first, so the counts printed below are honest.
+  //
+  // Grouping is by document id, not by URL string: `youtu.be/<id>`,
+  // `youtube.com/watch?v=<id>` and `/embed/<id>` are three spellings of one
+  // video, and they must fetch once. Every spelling is kept, because a lesson
+  // is joined to its video on the URL it stores (CLAUDE.md section 8) — dropping
+  // the ones that lost the tie would leave those lessons with no video document
+  // to match, and so no video moments in search.
   const targets = []
-  const seen = new Set()
+  const byDocId = new Map()
   for (const url of sourceUrls) {
     const parsed = parseVideoUrl(url)
     if (!parsed) {
@@ -166,9 +176,14 @@ async function main() {
       continue
     }
     const docId = docIdFor(parsed)
-    if (seen.has(docId)) continue
-    seen.add(docId)
-    targets.push({url, parsed, docId})
+    const existing = byDocId.get(docId)
+    if (existing) {
+      if (!existing.urls.includes(url)) existing.urls.push(url)
+      continue
+    }
+    const target = {url, urls: [url], parsed, docId}
+    byDocId.set(docId, target)
+    targets.push(target)
   }
 
   const selected = targets
@@ -180,6 +195,10 @@ async function main() {
     const position = `[${index + 1}/${selected.length}]`
 
     if (existsSync(cachePath) && !REFRESH) {
+      // A lesson added since the last run may spell this video's URL
+      // differently. Recording that spelling costs no network call, so the
+      // cache is kept current rather than left to the next `--refresh`.
+      mergeCachedUrls(cachePath, target.urls)
       skipped++
       continue
     }
@@ -216,6 +235,7 @@ async function main() {
           provider: target.parsed.provider,
           videoId: target.parsed.id,
           url: target.url,
+          urls: target.urls,
           title: probe.title,
           durationSeconds: probe.durationSeconds,
           captionSource: captions.captionSource,
