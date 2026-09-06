@@ -49,10 +49,12 @@ export const runtime = "nodejs";
 // not serve one learner's results to another.
 export const dynamic = "force-dynamic";
 // Search is an agentic loop: up to MAX_STEPS round trips to the Context MCP and
-// the model before a single byte comes back. That is far past the platform's
-// default function budget, and a truncated deploy fails only in production. 60s
-// is the ceiling every Vercel plan allows; Fluid compute can go higher.
-export const maxDuration = 60;
+// the model before a single byte comes back, so it needs a hosting budget far
+// past the platform default. It has to sit *above* SEARCH_DEADLINE_MS, not
+// below: the route already gives up gracefully at 90s and answers with the same
+// safe message as any other failure, and that only happens if the platform has
+// not killed the function first. Under it, a slow search is a bare 504 instead.
+export const maxDuration = 100;
 
 /** The provider behind `searchModel`, recorded on the analytics event. */
 const PROVIDER = "opencode";
