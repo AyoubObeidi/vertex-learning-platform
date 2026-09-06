@@ -22,6 +22,11 @@
   --color-success: #22c55e;
   --color-info: #f97316;
 
+  /* Lesson accent — the LESSON result badge in .agents/design/vertex-search.png,
+     the one place the product uses a colour outside the orange/neutral system. */
+  --color-lesson-100: #efedfa;
+  --color-lesson-500: #5b4fd6;
+
   /* Warm surface palette (sampled from .agents/design/vertex-home.png) */
   --color-canvas: #fbf8f5;
   --color-surface: #fdfcfa;
@@ -67,6 +72,9 @@
 
   --color-success: var(--color-success);
   --color-info: var(--color-info);
+
+  --color-lesson-100: var(--color-lesson-100);
+  --color-lesson-500: var(--color-lesson-500);
 
   --color-canvas: var(--color-canvas);
   --color-surface: var(--color-surface);

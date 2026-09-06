@@ -17,6 +17,25 @@ export function formatDuration(seconds: number | null | undefined): string | nul
   return `${hours}h ${minutes}m`;
 }
 
+/**
+ * A position inside a video: `765` → `"12:45"`, `3750` → `"1:02:30"`.
+ *
+ * Distinct from `formatDuration`, which reads a runtime ("18h 24m"). This one
+ * is a clock the learner matches against the player's own scrubber, so minutes
+ * are zero-padded and the hour only appears when there is one.
+ */
+export function formatTimestamp(seconds: number | null | undefined): string | null {
+  if (typeof seconds !== "number" || !Number.isFinite(seconds) || seconds < 0) {
+    return null;
+  }
+  const total = Math.floor(seconds);
+  const hours = Math.floor(total / 3600);
+  const minutes = Math.floor((total % 3600) / 60);
+  const secs = total % 60;
+  const pad = (value: number) => String(value).padStart(2, "0");
+  return hours > 0 ? `${hours}:${pad(minutes)}:${pad(secs)}` : `${pad(minutes)}:${pad(secs)}`;
+}
+
 /** `18420` → `"18.4k"`, `2100` → `"2.1k"`, `840` → `"840"`. */
 export function formatCount(value: number | null | undefined): string | null {
   if (typeof value !== "number" || !Number.isFinite(value) || value < 0) {

@@ -1,0 +1,10 @@
+{
+  "_readme": [
+    "Hand-authored tables of contents, keyed by video document id (video.youtube-<id>).",
+    "An entry here replaces whatever chapters the provider published and marks the",
+    "document chapterSource: \"authored\". Shape: [{ \"startSeconds\": 0, \"label\": \"Intro\" }].",
+    "Author chapters here rather than in the Studio — the import runs with --replace,",
+    "so a Studio edit survives only until the next run.",
+    "Keys starting with an underscore are ignored by the build."
+  ]
+}

@@ -1,10 +1,13 @@
-import { InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from "react";
+import { ComponentPropsWithRef, ReactNode, SelectHTMLAttributes } from "react";
 import { Search, ChevronDown } from "lucide-react";
 
-interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
+// `ComponentPropsWithRef` rather than `InputHTMLAttributes`: React 19 passes a
+// `ref` through as an ordinary prop, and the search field needs one to focus
+// itself on ⌘K.
+interface TextInputProps extends ComponentPropsWithRef<"input"> {
   icon?: ReactNode;
   shortcut?: string;
-  inputSize?: "md" | "lg";
+  inputSize?: "md" | "lg" | "search";
 }
 
 const sizeClasses = {
@@ -16,6 +19,11 @@ const sizeClasses = {
     field: "h-16 gap-4 rounded-[14px] border-line bg-surface px-6 text-[17px] sm:h-[84px]",
     kbd: "rounded-sm border-line px-3 py-2 text-sm",
   },
+  /** The field on the search results page: shorter than `lg`, on white. */
+  search: {
+    field: "h-[50px] gap-3 rounded-xl border-line bg-white px-4 text-[15px] sm:px-5",
+    kbd: "rounded-md border-line px-2 py-1 text-xs",
+  },
 } as const;
 
 export function TextInput({
@@ -26,10 +34,11 @@ export function TextInput({
   ...props
 }: TextInputProps) {
   const s = sizeClasses[inputSize];
+  const iconSize = { md: 18, lg: 24, search: 20 }[inputSize];
   const defaultIcon = (
     <Search
-      size={inputSize === "lg" ? 24 : 18}
-      strokeWidth={inputSize === "lg" ? 2 : 1.75}
+      size={iconSize}
+      strokeWidth={inputSize === "md" ? 1.75 : 2}
       className="shrink-0 text-neutral-500"
     />
   );
@@ -53,15 +62,22 @@ export function TextInput({
   );
 }
 
+const selectSizeClasses = {
+  md: "h-11 rounded-md border-neutral-200 px-4 pr-9 text-sm",
+  /** The sort control on the search results page. */
+  search: "h-[42px] rounded-[10px] border-line px-4 pr-9 text-[14px]",
+} as const;
+
 export function Select({
   className = "",
+  selectSize = "md",
   children,
   ...props
-}: SelectHTMLAttributes<HTMLSelectElement>) {
+}: SelectHTMLAttributes<HTMLSelectElement> & { selectSize?: "md" | "search" }) {
   return (
     <div className="relative">
       <select
-        className={`h-11 w-full appearance-none rounded-md border border-neutral-200 bg-white px-4 pr-9 text-sm text-neutral-900 outline-none focus:border-primary-400 ${className}`}
+        className={`w-full appearance-none border bg-white text-neutral-900 outline-none focus:border-accent disabled:opacity-60 ${selectSizeClasses[selectSize]} ${className}`}
         {...props}
       >
         {children}

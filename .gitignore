@@ -54,3 +54,8 @@ next-env.d.ts
 # seed build output
 studio/seed/dist/
 studio/context/dist/
+
+# video ingestion: fetched transcripts and build output are derived data that
+# `npm run videos:fetch` rebuilds. chapters.json is authored and IS committed.
+studio/videos/cache/
+studio/videos/dist/
