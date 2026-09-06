@@ -33,15 +33,8 @@ function isTheme(value: unknown): value is Theme {
   return value === "light" || value === "dark";
 }
 
-/**
- * The theme the OS asks for. Used only until the learner picks one: after that
- * their choice is stored and the OS no longer has a say.
- */
-export function systemTheme(): Theme {
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
-}
+/** What a browser with no stored choice gets. Dark is opt-in, never inferred. */
+export const DEFAULT_THEME: Theme = "light";
 
 /**
  * The stored choice, or `null` if the learner has not made one yet.
@@ -58,9 +51,9 @@ export function readStoredTheme(): Theme | null {
   }
 }
 
-/** The stored choice if there is one, otherwise whatever the OS is set to. */
+/** The stored choice if the learner has made one, otherwise the default. */
 export function currentTheme(): Theme {
-  return readStoredTheme() ?? systemTheme();
+  return readStoredTheme() ?? DEFAULT_THEME;
 }
 
 export function writeStoredTheme(theme: Theme): void {
@@ -79,14 +72,16 @@ export function applyTheme(theme: Theme): Theme {
 
 /**
  * The source of the `<head>` script, which runs synchronously while the browser
- * parses the HTML — before React exists and before the first paint, so a dark
- * reader never sees a light frame.
+ * parses the HTML — before React exists and before the first paint, so a learner
+ * who chose dark never sees a light frame on the way back in.
  *
  * This is a fixed literal. No request data, user input, or interpolated value
  * ever goes into it: it reads one storage key and writes one attribute.
  */
 export const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem(${JSON.stringify(
   THEME_STORAGE_KEY,
-)});if(t!=="light"&&t!=="dark")t=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute(${JSON.stringify(
+)});if(t!=="light"&&t!=="dark")t=${JSON.stringify(
+  DEFAULT_THEME,
+)};document.documentElement.setAttribute(${JSON.stringify(
   THEME_ATTRIBUTE,
 )},t)}catch(e){}})()`;

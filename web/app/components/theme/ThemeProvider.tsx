@@ -4,7 +4,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useLayoutEffect,
   useMemo,
   useState,
@@ -14,9 +13,8 @@ import {
 import {
   applyTheme,
   currentTheme,
+  DEFAULT_THEME,
   otherTheme,
-  readStoredTheme,
-  systemTheme,
   writeStoredTheme,
   type Theme,
 } from "@/app/lib/theme";
@@ -42,14 +40,15 @@ export function useTheme(): ThemeContextValue {
  *
  * The `<html>` attribute is already correct by the time this mounts — the
  * inline script in the root layout set it during parsing. This provider owns
- * the theme from then on: it persists changes and, until the learner has picked
- * a side, follows the OS.
+ * the theme from then on: it persists the learner's choice, and shows
+ * `DEFAULT_THEME` until they make one. The OS preference is deliberately not
+ * consulted, so a dark-OS machine still opens the site light.
  */
 export function ThemeProvider({ children }: { children: ReactNode }) {
   // A lazy initialiser reading the same storage key as the inline script, so
   // React's first render agrees with the DOM the script produced.
   const [theme, setThemeState] = useState<Theme>(() =>
-    typeof window === "undefined" ? "light" : currentTheme(),
+    typeof window === "undefined" ? DEFAULT_THEME : currentTheme(),
   );
 
   // In development, React Strict Mode remounts once and resets `<html>` to the
@@ -59,17 +58,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useLayoutEffect(() => {
     applyTheme(currentTheme());
   }, []);
-
-  // Until the learner picks a side, track the OS if it changes with the tab
-  // open. Once a choice is stored, this stops applying.
-  useEffect(() => {
-    if (readStoredTheme() !== null) return;
-
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const onChange = () => setThemeState(applyTheme(systemTheme()));
-    media.addEventListener("change", onChange);
-    return () => media.removeEventListener("change", onChange);
-  }, [theme]);
 
   const setTheme = useCallback((next: Theme) => {
     writeStoredTheme(next);
