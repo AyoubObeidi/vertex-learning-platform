@@ -1,18 +1,21 @@
 import { createMCPClient, type MCPClient } from "@ai-sdk/mcp";
-import { openai } from "@ai-sdk/openai";
 import { auth } from "@clerk/nextjs/server";
 import { generateText, isStepCount, Output } from "ai";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { LESSONS_BY_IDS_QUERY } from "@/sanity/lib/queries";
+import { LESSONS_BY_IDS_QUERY, VIDEO_MOMENTS_QUERY } from "@/sanity/lib/queries";
 import {
   contextMcpHeaders,
   contextMcpUrl,
   fetchInitialContext,
 } from "@/sanity/lib/context-mcp";
 import { flushPostHog, getPostHogClient } from "../../lib/posthog-server";
+import { searchModel, searchModelId } from "../../lib/search-model";
 import {
   buildSearchResults,
+  countCourses,
+  momentLookupParams,
+  parseSearchModelOutput,
   SearchModelOutputSchema,
   SearchRequestSchema,
   type SearchResponse,
@@ -31,12 +34,14 @@ import { buildSearchSystemPrompt } from "../../lib/search-prompt";
  *
  *   1. The model runs an agentic loop over the Context MCP's tools, writing
  *      GROQ against the deployed schema, and returns lesson ids plus one line
- *      of prose each.
- *   2. Those ids are read back out of the dataset here, and every field a card
- *      shows is taken from that read.
+ *      of prose each — and, for a video moment, the second it found.
+ *   2. Those ids are read back out of the dataset here, every second the model
+ *      named is proven against the lesson's video document, and every field a
+ *      card shows is taken from those two reads.
  *
- * So "never invent a course, lesson, or duration" is not a promise the prompt
- * makes — an invented lesson has no id that resolves and is dropped in stage 2.
+ * So "never invent a course, lesson, duration, or timestamp" is not a promise
+ * the prompt makes — an invented lesson has no id that resolves, and an
+ * invented second has no chapter or chunk behind it. Both are caught in stage 2.
  */
 
 export const runtime = "nodejs";
@@ -44,13 +49,39 @@ export const runtime = "nodejs";
 // not serve one learner's results to another.
 export const dynamic = "force-dynamic";
 
-const DEFAULT_MODEL = "gpt-5";
+/** The provider behind `searchModel`, recorded on the analytics event. */
+const PROVIDER = "opencode";
 
 /**
  * Structured output counts as a step, so the cap has to leave room for the tool
  * loop *and* the final answer. Twelve is enough for a broaden-and-retry or two.
  */
 const MAX_STEPS = 12;
+
+/**
+ * One deadline for the whole flow, not a per-call one.
+ *
+ * A search is an agentic loop over a free-tier gateway: any single step can
+ * stall, and `MAX_STEPS` bounds how many steps there are, not how long they
+ * take. Without a deadline a stalled provider holds a request, its MCP
+ * connection, and a rate-limit slot open indefinitely. Both model calls share
+ * this signal, so the repair pass cannot extend a search that has already run
+ * out of time, and an expiry lands in the same `catch` as any other failure —
+ * the learner gets the same safe message.
+ */
+const SEARCH_DEADLINE_MS = 90_000;
+
+/** How long a hung MCP connection may delay the response it is being closed for. */
+const MCP_CLOSE_TIMEOUT_MS = 2_000;
+
+/**
+ * The nudge for the repair pass. It asks only for a change of shape — the
+ * lessons were already found, and inventing new ones here would be caught by
+ * the same id lookup as anywhere else.
+ */
+const REPAIR_PROMPT =
+  "Return the final answer now as the structured object. Use only lessonIds " +
+  "that appeared in a tool result above. Do not run any more queries.";
 
 /* -------------------------------------------------------------------------- */
 /* Rate limiting                                                              */
@@ -103,8 +134,8 @@ function clientKey(request: Request): string {
 async function captureSearch(properties: {
   query: string;
   resultCount: number;
+  videoResultCount: number;
   durationMs: number;
-  model: string;
 }): Promise<void> {
   try {
     const { userId } = await auth();
@@ -114,8 +145,10 @@ async function captureSearch(properties: {
       properties: {
         query: properties.query,
         result_count: properties.resultCount,
+        video_result_count: properties.videoResultCount,
         duration_ms: properties.durationMs,
-        model: properties.model,
+        model: searchModelId,
+        provider: PROVIDER,
         $process_person_profile: Boolean(userId),
       },
     });
@@ -155,10 +188,10 @@ export async function POST(request: Request): Promise<Response> {
   }
 
   const { query } = parsed.data;
-  const model = process.env.OPENAI_MODEL || DEFAULT_MODEL;
   const startedAt = Date.now();
 
   let mcpClient: MCPClient | null = null;
+  const deadline = AbortSignal.timeout(SEARCH_DEADLINE_MS);
 
   try {
     const [client, initialContext] = await Promise.all([
@@ -177,17 +210,45 @@ export async function POST(request: Request): Promise<Response> {
       ),
     );
 
-    const { output } = await generateText({
-      model: openai(model),
-      system: buildSearchSystemPrompt(initialContext),
+    const system = buildSearchSystemPrompt(initialContext);
+
+    const research = await generateText({
+      model: searchModel,
+      system,
       // The learner's words go in as the prompt, never concatenated into the
       // system prompt: an injection attempt gets no privileged position, and
       // cannot fabricate a result it if did (see the module comment).
       prompt: query,
       tools,
-      output: Output.object({ schema: SearchModelOutputSchema }),
       stopWhen: isStepCount(MAX_STEPS),
+      abortSignal: deadline,
     });
+
+    // Deliberately *not* `Output.object` on the call above. Forcing a JSON
+    // schema on every step leaves a model no way to emit a tool call instead,
+    // so it never reaches the MCP and answers from nothing — measured here as
+    // zero tool calls and, on one model, four invented lesson ids. The schema
+    // is applied to the text afterwards instead, which costs nothing: the Zod
+    // parse is the same, and grounding never trusted this output anyway.
+    let output = parseSearchModelOutput(research.text);
+
+    if (!output) {
+      // A model that used its tools well but wrote its answer badly. Structured
+      // output is reliable once it is not competing with tool calling, so the
+      // same conversation is replayed with the schema and no tools.
+      const repaired = await generateText({
+        model: searchModel,
+        system,
+        messages: [
+          { role: "user", content: query },
+          ...research.response.messages,
+          { role: "user", content: REPAIR_PROMPT },
+        ],
+        output: Output.object({ schema: SearchModelOutputSchema }),
+        abortSignal: deadline,
+      });
+      output = repaired.output;
+    }
 
     const ids = output.results.map((result) => result.lessonId);
     const lessons = ids.length
@@ -198,20 +259,32 @@ export async function POST(request: Request): Promise<Response> {
         })
       : [];
 
-    const results = buildSearchResults(output.results, lessons);
+    // Only the picks that named a second cost a second read, and it comes back
+    // filtered to those seconds — never a whole transcript (CLAUDE.md §12).
+    const lookup = momentLookupParams(output.results, lessons);
+    const moments = lookup.urls.length
+      ? await sanityFetch({
+          query: VIDEO_MOMENTS_QUERY,
+          params: lookup,
+          fresh: true,
+        })
+      : [];
+
+    const results = buildSearchResults(output.results, lessons, moments);
 
     const payload: SearchResponse = {
       query,
       reply: output.reply,
       resultCount: results.length,
+      courseCount: countCourses(results),
       results,
     };
 
     await captureSearch({
       query,
       resultCount: results.length,
+      videoResultCount: results.filter((result) => result.kind === "video").length,
       durationMs: Date.now() - startedAt,
-      model,
     });
 
     return Response.json(payload, {
@@ -223,7 +296,15 @@ export async function POST(request: Request): Promise<Response> {
     console.error("[api/search] failed", error);
     return Response.json({ error: "Search is unavailable right now." }, { status: 500 });
   } finally {
-    // An HTTP MCP client left open leaks a connection per request.
-    await mcpClient?.close();
+    // An HTTP MCP client left open leaks a connection per request — but a close
+    // that never settles would hold the response open just as surely, which is
+    // exactly the state a deadline expiry leaves this in. Raced, so the worst
+    // case is a dropped connection rather than a hung request.
+    if (mcpClient) {
+      await Promise.race([
+        mcpClient.close().catch(() => {}),
+        new Promise((resolve) => setTimeout(resolve, MCP_CLOSE_TIMEOUT_MS)),
+      ]);
+    }
   }
 }

@@ -1,11 +1,29 @@
 "use client";
 
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import posthog from "posthog-js";
 import { Button } from "../ui/Button";
 import { TextInput } from "../ui/Input";
 
 export function Hero() {
+  const router = useRouter();
+  const [query, setQuery] = useState("");
+
+  /**
+   * The hero field is the front door to `/search`. It navigates rather than
+   * searching in place: the results page owns the query in its URL, so a search
+   * started here is shareable and survives the back button.
+   */
+  function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    const trimmed = query.trim();
+    if (!trimmed) return;
+    posthog.capture("home_search_submitted", { query: trimmed });
+    router.push(`/search?q=${encodeURIComponent(trimmed)}`);
+  }
+
   return (
     <section className="border-b border-line">
       <div className="mx-auto w-full max-w-[904px] px-5 pb-14 pt-14 text-center sm:px-6 sm:pt-[68px]">
@@ -33,7 +51,7 @@ export function Hero() {
           </Button>
         </div>
 
-        <div className="mx-auto mt-10 max-w-[746px]">
+        <form onSubmit={handleSubmit} role="search" className="mx-auto mt-10 max-w-[746px]">
           <label htmlFor="home-search" className="sr-only">
             Ask anything about your learning
           </label>
@@ -41,9 +59,13 @@ export function Hero() {
             id="home-search"
             inputSize="lg"
             shortcut="⌘ K"
+            maxLength={200}
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            enterKeyHint="search"
             placeholder="Ask anything about your learning..."
           />
-        </div>
+        </form>
       </div>
     </section>
   );

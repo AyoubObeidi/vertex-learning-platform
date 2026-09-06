@@ -24,15 +24,16 @@ export const SLUG = 'vertex-search'
  * render. Drafts are excluded because search must only ever surface what a
  * learner can actually open.
  *
- * There is no `video` type yet — transcript and chapter ingestion (CLAUDE.md
- * section 9) is not built, so search matches lessons on their own topic only.
- * Add `"video"` here when it lands.
+ * `video` is in here so the agent can resolve a query to an exact second, but it
+ * is not content: it is a lookup (section 7). A video document is never a
+ * result on its own, and the instructions below say so — the filter grants
+ * read access, not permission to surface it.
  *
  * Progress records and any other per-learner app state are deliberately absent:
  * the agent is a content search, not a window into somebody's account.
  */
 export const GROQ_FILTER =
-  '_type in ["course", "lesson", "instructor", "category"] && !(_id in path("drafts.**"))'
+  '_type in ["course", "lesson", "instructor", "category", "video"] && !(_id in path("drafts.**"))'
 
 /**
  * Pure deltas. Everything here is something the auto-generated schema does not
@@ -57,6 +58,14 @@ export const INSTRUCTIONS = `Vertex is a learning platform. A course contains or
 - \`notes\` is Portable Text and cannot be matched directly. Match its plain-text projection: \`pt::text(notes) match "cach*"\`.
 - Do not use \`text::semanticSimilarity()\`. Embeddings are not enabled on this dataset and it will error.
 - Rank by specificity: a \`title\` hit beats a \`keyPoints\` hit, which beats a \`pt::text(notes)\` hit.
+
+## Video moments
+
+- A \`video\` document is joined to a lesson on the URL the lesson stores. There is no reference between them, in either direction. One video can be spelled more than one way, so match both fields: \`*[_type == "video" && (url == ^.videoUrl || ^.videoUrl in urls)][0]\`.
+- A video document is **never a result**. It is a lookup that turns a query into a second inside a lesson's video. Only ever report a moment together with the lesson that uses that video.
+- Match \`chapters[].label\` first — chapter labels are clean, authored text. Only if no chapter matches, fall back to \`chunks[].text\`, which is raw transcript and noisy.
+- **Never project \`chapters\` or \`chunks\` wholesale.** A transcript is hundreds of chunks and returning one overflows the context window. Filter inside the array and take a handful: \`chunks[text match "cach*"][0...3]{startSeconds}\`.
+- \`startSeconds\` is a whole number of seconds from the start of the video. Only ever report one that came back in a query result — the application verifies it against the video document and discards a second that is not really there.
 
 ## Projections
 

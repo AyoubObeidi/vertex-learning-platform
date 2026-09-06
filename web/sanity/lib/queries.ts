@@ -227,6 +227,33 @@ export const LESSONS_BY_IDS_QUERY = defineQuery(/* groq */ `
   }
 `)
 
+/**
+ * Proves the seconds the search agent named are really taught there.
+ *
+ * A video document is joined to a lesson on `lesson.videoUrl == video.url`
+ * (CLAUDE.md section 8 — there is no reference between them), and it is an
+ * internal lookup that a learner never sees as a result.
+ *
+ * Both arrays are filtered *inside* the projection, by the exact seconds the
+ * model reported. That is deliberate on two counts: a transcript is hundreds of
+ * chunks and returning one wholesale is the context-window trap of CLAUDE.md
+ * section 12, and a second that comes back here is a second that exists — which
+ * is what lets the caller drop an invented timestamp.
+ *
+ * `chunks` needs no `text`: the model already wrote the description, and the
+ * chunk exists here only as evidence. Chapters keep their `label`, which
+ * becomes the moment's name when one matches.
+ */
+export const VIDEO_MOMENTS_QUERY = defineQuery(/* groq */ `
+  *[_type == "video" && (url in $urls || count(urls[@ in $urls]) > 0)]{
+    url,
+    urls,
+    durationSeconds,
+    "chapters": chapters[startSeconds in $seconds]{startSeconds, label},
+    "chunks": chunks[startSeconds in $seconds]{startSeconds}
+  }
+`)
+
 /* -------------------------------------------------------------------------- */
 /* Instructor                                                                 */
 /* -------------------------------------------------------------------------- */
