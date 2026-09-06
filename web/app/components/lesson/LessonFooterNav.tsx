@@ -22,8 +22,6 @@ export function LessonFooterNav({
   next: ModuleLesson | null;
   currentLessonSlug: string;
 }) {
-  if (!previous && !next) return null;
-
   const capture = (direction: "previous" | "next", target: ModuleLesson) =>
     posthog.capture("lesson_nav_clicked", {
       direction,
@@ -31,6 +29,8 @@ export function LessonFooterNav({
       to_lesson_slug: target.slug,
       to_lesson_title: target.title,
     });
+
+  if (!previous && !next) return null;
 
   return (
     <div className="sticky bottom-0 z-20 border-t border-line bg-canvas">

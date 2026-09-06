@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Bell, ChevronRight } from "lucide-react";
 import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import { ThemeToggle } from "../theme/ThemeToggle";
 import { Logo } from "./Logo";
 
 export function TopNav({ width = "column" }: { width?: "column" | "full" }) {
@@ -15,16 +16,23 @@ export function TopNav({ width = "column" }: { width?: "column" | "full" }) {
   return (
     <header className="w-full border-b border-line bg-canvas">
       <nav className={`flex h-20 items-center ${inner}`}>
-        <Logo />
+        <Link
+          href="/"
+          aria-label="Vertex home"
+          className="rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-canvas"
+        >
+          <Logo />
+        </Link>
         <div className="hidden items-center gap-11 text-base font-medium text-neutral-900 sm:flex sm:ml-[63px]">
           <Link href="/courses" className="transition-colors hover:text-accent">
             Courses
           </Link>
-          <a href="#" className="transition-colors hover:text-accent">
+          <Link href="/my-learning" className="transition-colors hover:text-accent">
             My Learning
-          </a>
+          </Link>
         </div>
         <div className="ml-auto flex items-center gap-5">
+          <ThemeToggle />
           <button
             type="button"
             aria-label="Notifications"

@@ -29,7 +29,7 @@ export function BrowseCatalogBand({ query }: { query: string }) {
       <Link
         href="/courses"
         onClick={() => posthog.capture("search_browse_catalog_clicked", { query })}
-        className="inline-flex h-[50px] shrink-0 items-center justify-center gap-3 rounded-xl bg-white px-6 text-[15px] font-semibold text-accent shadow-sm transition-shadow hover:shadow-md"
+        className="inline-flex h-[50px] shrink-0 items-center justify-center gap-3 rounded-xl bg-neutral-0 px-6 text-[15px] font-semibold text-accent shadow-sm transition-shadow hover:shadow-md"
       >
         Browse all courses
         <ArrowRight size={18} strokeWidth={2} />

@@ -41,6 +41,7 @@ const courseCardFragment = /* groq */ `
   category->{_id, title, "slug": slug.current},
   "moduleCount": count(modules),
   "lessonCount": count(modules[].lessons[]),
+  "lessonIds": modules[].lessons[]._ref,
   "durationSeconds": math::sum(modules[].lessons[]->durationSeconds)
 `
 
@@ -270,5 +271,76 @@ export const INSTRUCTOR_BY_SLUG_QUERY = defineQuery(/* groq */ `
       | order(popular desc, title asc){
         ${courseCardFragment}
       }
+  }
+`)
+
+/* -------------------------------------------------------------------------- */
+/* Learner progress                                                           */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * One learner's record for one course. Read by id rather than by filter: the
+ * document id is derived from the Clerk user id and the course id, so there is
+ * nothing to search for.
+ *
+ * `completedLessons` is projected down to ids — the page needs to know which
+ * lessons are done, not to resolve them again.
+ */
+export const PROGRESS_BY_ID_QUERY = defineQuery(/* groq */ `
+  *[_id == $id][0]{
+    "completedLessonIds": completedLessons[]._ref,
+    "lastLessonId": lastLesson._ref,
+    lastPositionSeconds
+  }
+`)
+
+/**
+ * Every course a learner has started, for the catalog's per-card bars. Keyed by
+ * course id so the page can look each card up without a query per card.
+ */
+export const PROGRESS_FOR_USER_QUERY = defineQuery(/* groq */ `
+  *[_type == "progress" && userId == $userId]{
+    "courseId": course._ref,
+    "completedLessonIds": completedLessons[]._ref
+  }
+`)
+
+/**
+ * Everything the My Learning page shows, in one read.
+ *
+ * Filtered by user id, then joined *through* the reference to the course, so a
+ * learner with eight started courses is one query rather than nine. Ordered by
+ * `updatedAt` because the page is about what they were most recently doing.
+ *
+ * `lessons` is projected alongside the card fragment because the resume target
+ * needs slugs, not just the ids `lessonIds` carries. A record whose course has
+ * since been deleted comes back with `course: null` and is dropped by the page.
+ */
+export const MY_LEARNING_QUERY = defineQuery(/* groq */ `
+  *[_type == "progress" && userId == $userId] | order(updatedAt desc){
+    updatedAt,
+    lastPositionSeconds,
+    "lastLessonId": lastLesson._ref,
+    "completedLessonIds": completedLessons[]._ref,
+    course->{
+      ${courseCardFragment},
+      "lessons": modules[].lessons[]->{_id, "slug": slug.current}
+    }
+  }
+`)
+
+/**
+ * The check the progress route runs before recording anything: does this lesson
+ * actually belong to this course? Without it a client could POST any lesson id
+ * and inflate its own percentage.
+ *
+ * Returns the lesson's duration too, so the route can clamp an incoming
+ * position and decide whether it crosses the completion threshold — one read
+ * instead of two.
+ */
+export const LESSON_IN_COURSE_QUERY = defineQuery(/* groq */ `
+  *[_type == "course" && _id == $courseId][0]{
+    "lessonIds": modules[].lessons[]._ref,
+    "lesson": *[_type == "lesson" && _id == $lessonId][0]{_id, durationSeconds}
   }
 `)

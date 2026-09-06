@@ -4,14 +4,13 @@ import { useState } from "react";
 import { ChevronDown, ListTree } from "lucide-react";
 
 import { LessonSidebar } from "./LessonSidebar";
+import { useLessonProgress } from "./LessonProgressProvider";
 import type { LessonCourse, LessonPosition } from "../../lib/lesson";
 
 type OutlineProps = {
   course: LessonCourse;
   position: LessonPosition;
   currentLessonId: string;
-  completedLessonIds: string[];
-  percentComplete: number;
 };
 
 /**
@@ -21,6 +20,9 @@ type OutlineProps = {
  */
 export function LessonOutline(props: OutlineProps) {
   const [open, setOpen] = useState(false);
+  // Live rather than server-rendered: completing a lesson has to move the bar
+  // and tick its row without a reload.
+  const { completedLessonIds, percent } = useLessonProgress();
 
   return (
     <>
@@ -47,7 +49,11 @@ export function LessonOutline(props: OutlineProps) {
         id="lesson-outline"
         className={`${open ? "block" : "hidden"} border-b border-line lg:block lg:h-full lg:border-b-0`}
       >
-        <LessonSidebar {...props} />
+        <LessonSidebar
+          {...props}
+          completedLessonIds={completedLessonIds}
+          percentComplete={percent}
+        />
       </div>
     </>
   );

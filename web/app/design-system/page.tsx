@@ -34,7 +34,7 @@ function Section({
 }) {
   return (
     <section
-      className={`rounded-lg border border-neutral-200 bg-white p-6 shadow-sm ${className}`}
+      className={`rounded-lg border border-neutral-200 bg-neutral-0 p-6 shadow-sm ${className}`}
     >
       <div className="mb-5 flex items-center gap-2">
         <span className="text-xs font-semibold text-primary-500">{number}</span>
@@ -107,7 +107,7 @@ export default function Home() {
 
       <main className="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-10">
         {/* Header */}
-        <div className="rounded-lg border border-neutral-200 bg-white p-8 shadow-sm">
+        <div className="rounded-lg border border-neutral-200 bg-neutral-0 p-8 shadow-sm">
           <Logo />
           <h1 className="mt-4 font-display text-5xl font-bold text-neutral-900">
             Design System
@@ -208,16 +208,16 @@ export default function Home() {
             </div>
             <p className="mb-3 text-sm font-medium text-neutral-700">Shadows</p>
             <div className="grid grid-cols-4 gap-3">
-              <div className="rounded-md border border-neutral-100 bg-white p-3 text-xs font-medium text-neutral-700 shadow-sm">
+              <div className="rounded-md border border-neutral-100 bg-neutral-0 p-3 text-xs font-medium text-neutral-700 shadow-sm">
                 SM
               </div>
-              <div className="rounded-md border border-neutral-100 bg-white p-3 text-xs font-medium text-neutral-700 shadow-md">
+              <div className="rounded-md border border-neutral-100 bg-neutral-0 p-3 text-xs font-medium text-neutral-700 shadow-md">
                 MD
               </div>
-              <div className="rounded-md border border-neutral-100 bg-white p-3 text-xs font-medium text-neutral-700 shadow-lg">
+              <div className="rounded-md border border-neutral-100 bg-neutral-0 p-3 text-xs font-medium text-neutral-700 shadow-lg">
                 LG
               </div>
-              <div className="rounded-md border border-neutral-100 bg-white p-3 text-xs font-medium text-neutral-700 shadow-xl">
+              <div className="rounded-md border border-neutral-100 bg-neutral-0 p-3 text-xs font-medium text-neutral-700 shadow-xl">
                 XL
               </div>
             </div>

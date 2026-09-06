@@ -5,10 +5,12 @@ import { ArrowRight } from "lucide-react";
 import posthog from "posthog-js";
 
 /**
- * The sticky footer bar from the design. Presentational for now: learner
- * progress is not tracked yet (CLAUDE.md section 7 keeps that behind a server
- * route), so `percent` arrives as 0 and the bar invites the learner to start.
- * Wiring real progress is a matter of passing a real `percent` and `href`.
+ * The sticky footer bar from the design.
+ *
+ * `percent` is the learner's real completion, derived server-side from their
+ * progress record, and `href` is where "Continue Learning" resumes — the lesson
+ * they stopped in, at the second they stopped at. A signed-out visitor gets 0
+ * and "Start Learning", which is exactly the state an unstarted course shows.
  */
 export function CourseProgressBar({
   percent,

@@ -22,6 +22,11 @@
   --color-success: #22c55e;
   --color-info: #f97316;
 
+  /* Ink: scrims and glyphs painted onto video artwork. Deliberately absent
+     from the dark block below — the artwork is the same picture in either
+     theme, so a white play glyph on a white scrim is the bug this avoids. */
+  --color-ink: #0f172a;
+
   /* Lesson accent — the LESSON result badge in .agents/design/vertex-search.png,
      the one place the product uses a colour outside the orange/neutral system. */
   --color-lesson-100: #efedfa;
@@ -46,6 +51,8 @@
   --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
   --shadow-lg: 0 12px 24px -4px rgba(15, 23, 42, 0.1);
   --shadow-xl: 0 20px 40px -8px rgba(15, 23, 42, 0.12);
+
+  color-scheme: light;
 
   --background: var(--color-canvas);
   --foreground: var(--color-neutral-900);
@@ -72,6 +79,7 @@
 
   --color-success: var(--color-success);
   --color-info: var(--color-info);
+  --color-ink: var(--color-ink);
 
   --color-lesson-100: var(--color-lesson-100);
   --color-lesson-500: var(--color-lesson-500);
@@ -101,4 +109,166 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+}
+
+/* ---------------------------------------------------------------------------
+   Dark mode.
+
+   The whole design system is these custom properties, so a theme is a remap of
+   the values behind them — no component carries a `dark:` variant. That does
+   mean the neutral scale inverts: `--color-neutral-900` is near-white here.
+   The name reads backwards, but it keeps every one of the ~250 existing
+   `text-neutral-900` / `bg-neutral-100` uses correct without touching them.
+
+   The 100–300 tints of primary and lesson invert direction too, because they
+   are fills sitting *behind* text (badges, hover states), not text themselves.
+
+   `[data-theme="dark"]` is set by the inline script in the root layout before
+   first paint. The media query below is the no-JavaScript fallback, guarded so
+   an explicit Light choice always wins over the OS.
+   --------------------------------------------------------------------------- */
+
+/* The raw dark values, declared once so the two selectors below map rather
+   than duplicate them. Inert in light mode. */
+:root {
+  --d-primary-500: #fb8b3c;
+  --d-primary-400: #fda45f;
+  --d-primary-300: #c9752f;
+  --d-primary-200: #5c382b;
+  --d-primary-100: #3a241c;
+
+  --d-neutral-900: #f5f1ee;
+  --d-neutral-700: #d6cec8;
+  --d-neutral-500: #a2958d;
+  --d-neutral-300: #4a3f39;
+  --d-neutral-200: #392f2a;
+  --d-neutral-100: #292220;
+  --d-neutral-50: #201a17;
+  --d-neutral-0: #1f1916;
+
+  --d-success: #4ade80;
+  --d-info: #f0805c;
+
+  --d-lesson-100: #26224a;
+  --d-lesson-500: #a99cf5;
+
+  --d-canvas: #17120f;
+  --d-surface: #1f1916;
+  --d-line: #332a25;
+  --d-accent: #f0805c;
+
+  /* The light shadows are rgba(15, 23, 42, 0.05-0.12) and vanish on a dark
+     canvas, so dark mode uses black at roughly triple the alpha. */
+  --d-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --d-shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.5);
+  --d-shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.55);
+  --d-shadow-xl: 0 20px 40px -8px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-primary-500: var(--d-primary-500);
+  --color-primary-400: var(--d-primary-400);
+  --color-primary-300: var(--d-primary-300);
+  --color-primary-200: var(--d-primary-200);
+  --color-primary-100: var(--d-primary-100);
+
+  --color-neutral-900: var(--d-neutral-900);
+  --color-neutral-700: var(--d-neutral-700);
+  --color-neutral-500: var(--d-neutral-500);
+  --color-neutral-300: var(--d-neutral-300);
+  --color-neutral-200: var(--d-neutral-200);
+  --color-neutral-100: var(--d-neutral-100);
+  --color-neutral-50: var(--d-neutral-50);
+  --color-neutral-0: var(--d-neutral-0);
+
+  --color-success: var(--d-success);
+  --color-info: var(--d-info);
+
+  --color-lesson-100: var(--d-lesson-100);
+  --color-lesson-500: var(--d-lesson-500);
+
+  --color-canvas: var(--d-canvas);
+  --color-surface: var(--d-surface);
+  --color-line: var(--d-line);
+  --color-accent: var(--d-accent);
+
+  --shadow-sm: var(--d-shadow-sm);
+  --shadow-md: var(--d-shadow-md);
+  --shadow-lg: var(--d-shadow-lg);
+  --shadow-xl: var(--d-shadow-xl);
+}
+
+/* With JavaScript on, the inline script in the root layout writes a concrete
+   `data-theme` before first paint — the learner's stored choice, or the OS on a
+   first visit — so the rule above does all the work. This block is the no-JS
+   fallback: follow the OS unless the reader has explicitly stored Light. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --color-primary-500: var(--d-primary-500);
+    --color-primary-400: var(--d-primary-400);
+    --color-primary-300: var(--d-primary-300);
+    --color-primary-200: var(--d-primary-200);
+    --color-primary-100: var(--d-primary-100);
+
+    --color-neutral-900: var(--d-neutral-900);
+    --color-neutral-700: var(--d-neutral-700);
+    --color-neutral-500: var(--d-neutral-500);
+    --color-neutral-300: var(--d-neutral-300);
+    --color-neutral-200: var(--d-neutral-200);
+    --color-neutral-100: var(--d-neutral-100);
+    --color-neutral-50: var(--d-neutral-50);
+    --color-neutral-0: var(--d-neutral-0);
+
+    --color-success: var(--d-success);
+    --color-info: var(--d-info);
+
+    --color-lesson-100: var(--d-lesson-100);
+    --color-lesson-500: var(--d-lesson-500);
+
+    --color-canvas: var(--d-canvas);
+    --color-surface: var(--d-surface);
+    --color-line: var(--d-line);
+    --color-accent: var(--d-accent);
+
+    --shadow-sm: var(--d-shadow-sm);
+    --shadow-md: var(--d-shadow-md);
+    --shadow-lg: var(--d-shadow-lg);
+    --shadow-xl: var(--d-shadow-xl);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   The theme toggle's two icons.
+
+   Which one shows is decided in CSS from the same `data-theme` attribute the
+   colours use, not from React state. The theme lives only in the browser, so
+   rendering it would mismatch on hydration and flash the wrong icon; this way
+   the markup is identical on both sides.
+
+   The `:not([data-theme])` pair is the no-JavaScript case, and matches whatever
+   the `prefers-color-scheme` fallback above has painted.
+   --------------------------------------------------------------------------- */
+
+.theme-choice {
+  display: none;
+}
+
+[data-theme="light"] .theme-choice-light,
+[data-theme="dark"] .theme-choice-dark,
+:root:not([data-theme]) .theme-choice-light {
+  display: inline-flex;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .theme-choice-light {
+    display: none;
+  }
+
+  :root:not([data-theme]) .theme-choice-dark {
+    display: inline-flex;
+  }
 }

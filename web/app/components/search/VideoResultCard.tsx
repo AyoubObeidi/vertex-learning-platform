@@ -59,11 +59,11 @@ export function VideoResultCard({
           aria-hidden
           className="absolute inset-0 flex items-center justify-center"
         >
-          <span className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-white/90 text-neutral-900 shadow-md transition-transform group-hover:scale-105">
+          <span className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-white/90 text-ink shadow-md transition-transform group-hover:scale-105">
             <Play size={18} strokeWidth={2} className="ml-0.5 fill-current" />
           </span>
         </span>
-        <span className="absolute bottom-2 right-2 rounded-md bg-neutral-900/85 px-2 py-1 text-[12px] font-medium tabular-nums text-white">
+        <span className="absolute bottom-2 right-2 rounded-md bg-ink/85 px-2 py-1 text-[12px] font-medium tabular-nums text-white">
           {timestamp}
         </span>
       </div>

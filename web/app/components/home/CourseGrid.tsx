@@ -2,6 +2,7 @@ import type { COURSES_CATALOG_QUERY_RESULT } from "@/sanity.types";
 import { urlFor } from "@/sanity/lib/image";
 import { CourseCard } from "../ui/Cards";
 import { formatDuration, formatLevel, pluralize } from "../../lib/format";
+import { percentComplete } from "../../lib/progress";
 
 /**
  * The one place a Sanity course becomes a card. The home page and the catalog
@@ -12,9 +13,16 @@ export type CourseCardData = COURSES_CATALOG_QUERY_RESULT[number];
 export function CourseGrid({
   courses,
   emptyMessage = "No courses are published yet.",
+  completedByCourse,
 }: {
   courses: CourseCardData[];
   emptyMessage?: string;
+  /**
+   * Completed lesson ids per course id, for the learner viewing the page. Absent
+   * on the home page and for signed-out visitors, and a course missing from it
+   * is simply one they have not started — either way, no bar is drawn.
+   */
+  completedByCourse?: Map<string, string[]>;
 }) {
   if (courses.length === 0) {
     return <p className="mt-7 text-[15px] text-neutral-500">{emptyMessage}</p>;
@@ -24,6 +32,7 @@ export function CourseGrid({
     <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {courses.map((course) => {
         const cover = course.coverImage?.asset ? course.coverImage : null;
+        const completed = completedByCourse?.get(course._id);
         return (
           <CourseCard
             key={course._id}
@@ -43,6 +52,11 @@ export function CourseGrid({
             level={formatLevel(course.level) ?? ""}
             duration={formatDuration(course.durationSeconds) ?? ""}
             modules={pluralize(course.moduleCount ?? 0, "module")}
+            percentComplete={
+              completed && completed.length > 0
+                ? percentComplete(completed, course.lessonIds ?? [])
+                : undefined
+            }
           />
         );
       })}

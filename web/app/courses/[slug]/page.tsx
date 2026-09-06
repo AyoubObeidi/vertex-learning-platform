@@ -8,6 +8,8 @@ import { CourseHero } from "../../components/course/CourseHero";
 import { LearningOutcomes } from "../../components/course/LearningOutcomes";
 import { CourseContent } from "../../components/course/CourseContent";
 import { CourseProgressBar } from "../../components/course/CourseProgressBar";
+import { courseLessonIds, lessonHref, percentComplete, resumeTarget } from "../../lib/progress";
+import { getCourseProgress } from "../../lib/progress-server";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { COURSE_BY_SLUG_QUERY, COURSE_SLUGS_QUERY } from "@/sanity/lib/queries";
 
@@ -48,10 +50,19 @@ export default async function CoursePage({ params }: PageProps<"/courses/[slug]"
 
   if (!course) notFound();
 
-  // The CTA target is the course's first lesson. Lesson order is array order,
-  // so the first lesson of the first module that has one wins.
-  const firstLessonSlug =
-    course.modules.flatMap((courseModule) => courseModule.lessons ?? [])[0]?.slug ?? null;
+  // Lesson order is array order, so the first lesson of the first module that
+  // has one is where an unstarted course begins.
+  const lessons = course.modules.flatMap((courseModule) => courseModule.lessons ?? []);
+  const firstLessonSlug = lessons[0]?.slug ?? null;
+
+  // Per-learner, so this read is uncached and the route renders dynamically.
+  // Signed out it is the zero record and the bar reads "Not started".
+  const progress = await getCourseProgress(course._id);
+  const percent = percentComplete(progress.completedLessonIds, courseLessonIds(course.modules));
+
+  // "Continue Learning" goes back to where they stopped; "Start Learning" to
+  // lesson one. `resumeTarget` decides which, so the rule lives in one place.
+  const resume = resumeTarget(progress, lessons);
 
   return (
     <div className="flex min-h-screen flex-col bg-canvas">
@@ -84,8 +95,8 @@ export default async function CoursePage({ params }: PageProps<"/courses/[slug]"
         />
 
         <CourseProgressBar
-          percent={0}
-          href={firstLessonSlug ? `/lessons/${firstLessonSlug}` : null}
+          percent={percent}
+          href={resume ? lessonHref(resume.slug, resume.startSeconds) : null}
         />
       </main>
     </div>

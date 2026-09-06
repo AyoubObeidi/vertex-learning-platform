@@ -6,6 +6,7 @@ import { TopNav } from "../components/ui/Navigation";
 import { BarBand } from "../components/home/BarBand";
 import { CourseGrid } from "../components/home/CourseGrid";
 import { pluralize } from "../lib/format";
+import { getCatalogProgress } from "../lib/progress-server";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { COURSES_CATALOG_QUERY } from "@/sanity/lib/queries";
 
@@ -19,6 +20,10 @@ export default async function CoursesPage() {
     query: COURSES_CATALOG_QUERY,
     tags: ["courses"],
   });
+
+  // Per-learner, so this read is uncached and the route renders dynamically.
+  // Signed out it is empty and no card draws a bar.
+  const completedByCourse = await getCatalogProgress();
 
   // Derived from the courses already fetched rather than a second query.
   const categoryCount = new Set(
@@ -60,7 +65,7 @@ export default async function CoursesPage() {
             {categoryCount > 0 && ` • ${pluralize(categoryCount, "category", "categories")}`}
           </p>
 
-          <CourseGrid courses={courses} />
+          <CourseGrid courses={courses} completedByCourse={completedByCourse} />
 
           <div className="mt-14 flex items-center gap-5">
             <span aria-hidden="true" className="h-px flex-1 bg-line" />

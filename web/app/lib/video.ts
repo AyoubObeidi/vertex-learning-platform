@@ -120,8 +120,11 @@ export function parseVideoUrl(videoUrl: string | null | undefined): ParsedVideo 
  * The URL for the iframe. `autoplay` is on because this is only ever mounted
  * after the learner asked for the video — either by pressing play or by
  * arriving on a link that names a start second.
+ *
+ * `origin` is the page's own origin, needed by YouTube's JS API. It is passed
+ * in rather than read from `window` so this module stays usable on the server.
  */
-export function embedUrl(video: ParsedVideo, startSeconds = 0): string {
+export function embedUrl(video: ParsedVideo, startSeconds = 0, origin?: string): string {
   const start = Math.max(0, Math.floor(startSeconds));
 
   switch (video.provider) {
@@ -133,7 +136,12 @@ export function embedUrl(video: ParsedVideo, startSeconds = 0): string {
         rel: "0",
         modestbranding: "1",
         playsinline: "1",
+        // Turns on the postMessage API the progress tracker listens to. Without
+        // it the player reports nothing and completion falls back to the manual
+        // toggle. YouTube requires `origin` alongside it.
+        enablejsapi: "1",
       });
+      if (origin) params.set("origin", origin);
       if (start > 0) params.set("start", String(start));
       return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(video.id)}?${params}`;
     }
