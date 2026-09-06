@@ -1,4 +1,4 @@
-import {BookIcon, DocumentVideoIcon, PlayIcon, TagIcon, UserIcon} from '@sanity/icons'
+import {ActivityIcon, BookIcon, DocumentVideoIcon, PlayIcon, TagIcon, UserIcon} from '@sanity/icons'
 import type {StructureResolver} from 'sanity/structure'
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
@@ -13,4 +13,7 @@ export const structure: StructureResolver = (S) =>
       // Built by studio/videos, not authored. Listed so an ingestion run can be
       // eyeballed without opening Vision.
       S.documentTypeListItem('video').title('Videos').icon(DocumentVideoIcon),
+      // App state, written by the web app's progress route. Listed so a
+      // learner's record can be eyeballed without opening Vision.
+      S.documentTypeListItem('progress').title('Learner progress').icon(ActivityIcon),
     ])

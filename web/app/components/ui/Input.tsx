@@ -12,7 +12,7 @@ interface TextInputProps extends ComponentPropsWithRef<"input"> {
 
 const sizeClasses = {
   md: {
-    field: "h-11 gap-2 rounded-md border-neutral-200 bg-white px-4 text-sm",
+    field: "h-11 gap-2 rounded-md border-neutral-200 bg-neutral-0 px-4 text-sm",
     kbd: "rounded border-neutral-200 px-1.5 py-0.5 text-xs",
   },
   lg: {
@@ -21,7 +21,7 @@ const sizeClasses = {
   },
   /** The field on the search results page: shorter than `lg`, on white. */
   search: {
-    field: "h-[50px] gap-3 rounded-xl border-line bg-white px-4 text-[15px] sm:px-5",
+    field: "h-[50px] gap-3 rounded-xl border-line bg-neutral-0 px-4 text-[15px] sm:px-5",
     kbd: "rounded-md border-line px-2 py-1 text-xs",
   },
 } as const;
@@ -77,7 +77,7 @@ export function Select({
   return (
     <div className="relative">
       <select
-        className={`w-full appearance-none border bg-white text-neutral-900 outline-none focus:border-accent disabled:opacity-60 ${selectSizeClasses[selectSize]} ${className}`}
+        className={`w-full appearance-none border bg-neutral-0 text-neutral-900 outline-none focus:border-accent disabled:opacity-60 ${selectSizeClasses[selectSize]} ${className}`}
         {...props}
       >
         {children}

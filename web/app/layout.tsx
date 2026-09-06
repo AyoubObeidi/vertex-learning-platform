@@ -1,7 +1,10 @@
-import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
+import { ClerkThemeProvider } from "./components/theme/ClerkThemeProvider";
+import { ThemeProvider } from "./components/theme/ThemeProvider";
+import { InlineScript } from "./components/ui/InlineScript";
+import { THEME_SCRIPT } from "./lib/theme";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -23,14 +26,24 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
+    // The inline script below rewrites the theme attributes on this element
+    // before React hydrates, so React has to accept the DOM over its own output.
     <html
       lang="en"
       className={`${playfair.variable} ${inter.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        {/* Runs while the browser parses the HTML — before the first paint —
+            so a reader on dark never sees a light frame. */}
+        <InlineScript html={THEME_SCRIPT} />
+      </head>
       <body className="min-h-full flex flex-col bg-canvas text-neutral-900">
-        <ClerkProvider>
-          {children}
-        </ClerkProvider>
+        <ThemeProvider>
+          <ClerkThemeProvider>
+            {children}
+          </ClerkThemeProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

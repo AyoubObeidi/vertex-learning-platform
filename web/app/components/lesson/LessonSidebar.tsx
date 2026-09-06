@@ -15,9 +15,9 @@ type SidebarProps = {
   position: LessonPosition;
   currentLessonId: string;
   /**
-   * Learner progress. Zero today: CLAUDE.md section 7 keeps progress in its own
-   * record written through a server route, and none of that exists yet. Wiring
-   * it later means passing real values here, nothing more.
+   * Learner progress, live from `LessonProgressProvider` rather than the server
+   * render: completing a lesson has to tick its row and move the bar without a
+   * reload. Signed out, both are empty and the panel renders its zero state.
    */
   completedLessonIds: string[];
   percentComplete: number;
@@ -196,13 +196,22 @@ function ModuleRow({
                     {isCurrentLesson ? "Now playing" : formatDuration(lesson.durationSeconds)}
                   </span>
                 </span>
-                {isCurrentLesson && (
+                {isCurrentLesson ? (
                   <span
                     aria-hidden="true"
                     className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent"
                   >
                     <Play size={10} strokeWidth={0} className="ml-px fill-white" />
                   </span>
+                ) : (
+                  isDone && (
+                    <span
+                      aria-label="Completed"
+                      className="mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full border border-accent text-accent"
+                    >
+                      <Check size={11} strokeWidth={2.5} aria-hidden="true" />
+                    </span>
+                  )
                 )}
               </>
             );

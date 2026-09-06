@@ -6,6 +6,7 @@ import Link from "next/link";
 import { BarChart3, Clock, ExternalLink, FileText, PlayCircle } from "lucide-react";
 import posthog from "posthog-js";
 import { Badge } from "./Badge";
+import { ProgressBar } from "./ProgressBar";
 
 /** A cover image already resolved to a URL, so this file stays Sanity-agnostic. */
 export type CardCover = {
@@ -16,7 +17,7 @@ export type CardCover = {
 
 function CardShell({ children }: { children: ReactNode }) {
   return (
-    <div className="flex flex-col gap-3 rounded-lg border border-neutral-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
+    <div className="flex flex-col gap-3 rounded-lg border border-neutral-200 bg-neutral-0 p-4 shadow-sm transition-shadow hover:shadow-md">
       {children}
     </div>
   );
@@ -32,6 +33,7 @@ export function CourseCard({
   level,
   duration,
   modules,
+  percentComplete,
 }: {
   initial?: string;
   icon?: ReactNode;
@@ -42,6 +44,12 @@ export function CourseCard({
   level: string;
   duration: string;
   modules: string;
+  /**
+   * The learner's progress in this course, when they have started it. Absent
+   * for a course they have not touched and for every signed-out visitor, so an
+   * untouched catalog looks exactly as it does today.
+   */
+  percentComplete?: number;
 }) {
   const tile = cover ? (
     <div className="relative h-[74px] w-[74px] overflow-hidden rounded-[16px] bg-neutral-900">
@@ -71,6 +79,11 @@ export function CourseCard({
       </h3>
       <p className="mt-4 text-[14px] leading-[24px] text-neutral-700">{description}</p>
       <div className="mt-auto border-t border-line pt-6">
+        {typeof percentComplete === "number" && (
+          <div className="mb-4">
+            <ProgressBar value={percentComplete} />
+          </div>
+        )}
         <div className="-mx-1 flex flex-wrap items-center gap-x-1.5 gap-y-2 whitespace-nowrap text-[10px] text-neutral-500">
           {level && (
             <span className="flex items-center gap-1">

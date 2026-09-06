@@ -1,10 +1,10 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import posthog from "posthog-js";
-import { Button } from "../ui/Button";
 import { TextInput } from "../ui/Input";
 
 export function Hero() {
@@ -41,14 +41,19 @@ export function Hero() {
         </p>
 
         <div className="mt-7 flex justify-center">
-          <Button
-            variant="accent"
-            size="lg"
-            icon={<ArrowRight size={20} strokeWidth={2} />}
+          {/*
+            A real link, not a Button, so the catalog is reachable by
+            middle-click and shows its URL on hover. The classes mirror the
+            accent/lg Button variant exactly so the design is unchanged.
+          */}
+          <Link
+            href="/courses"
             onClick={() => posthog.capture("explore_courses_clicked")}
+            className="inline-flex h-[62px] items-center justify-center gap-3 rounded-[10px] bg-accent px-8 text-[17px] font-medium text-white transition-colors hover:brightness-95"
           >
             Explore Courses
-          </Button>
+            <ArrowRight size={20} strokeWidth={2} />
+          </Link>
         </div>
 
         <form onSubmit={handleSubmit} role="search" className="mx-auto mt-10 max-w-[746px]">
