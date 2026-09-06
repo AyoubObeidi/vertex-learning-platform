@@ -48,6 +48,11 @@ export const runtime = "nodejs";
 // The response is per-query and never cached: it is a model call, and Next must
 // not serve one learner's results to another.
 export const dynamic = "force-dynamic";
+// Search is an agentic loop: up to MAX_STEPS round trips to the Context MCP and
+// the model before a single byte comes back. That is far past the platform's
+// default function budget, and a truncated deploy fails only in production. 60s
+// is the ceiling every Vercel plan allows; Fluid compute can go higher.
+export const maxDuration = 60;
 
 /** The provider behind `searchModel`, recorded on the analytics event. */
 const PROVIDER = "opencode";
