@@ -1,69 +1,55 @@
 import "server-only";
 
-import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 
 /**
  * The model behind intelligent search (CLAUDE.md section 5).
  *
- * OpenCode Zen, an AI gateway reached through its OpenAI-compatible API.
- * Provider wiring lives here rather than in the route so that "which model
- * answers a search" has one answer in the codebase, and so the route stays
+ * The Google Gemini API, called directly through the AI SDK's native Google
+ * provider. Provider wiring lives here rather than in the route so that "which
+ * model answers a search" has one answer in the codebase, and so the route stays
  * about search.
  *
- * Nothing here may reach the browser: `OPENCODE_API_KEY` is a billed
- * credential, and `server-only` turns any client-component import of this
- * module into a build error.
+ * Nothing here may reach the browser: `GEMINI_API_KEY` is a billed credential,
+ * and `server-only` turns any client-component import of this module into a
+ * build error.
  *
- * Three things about this setup are easy to get wrong:
+ * Two things about this setup are easy to get wrong:
  *
- * - **This provider speaks `/chat/completions`, and only that.** Zen routes
- *   different model families to different endpoints — `/chat/completions`,
- *   `/responses`, and `/messages` — so a model served over a vendor-native
- *   endpoint cannot be reached from here no matter how correct the key is.
- *   That is exactly what broke the original OpenAI wiring: `@ai-sdk/openai`
- *   targets `/responses` by default. If a model id 404s or returns a shape the
- *   SDK cannot read, that is this problem, and the fix is a different model.
+ * - **Model ids are bare** — `gemini-3.5-flash`, not `google/gemini-3.5-flash`
+ *   (that is OpenRouter's form) and not `models/gemini-3.5-flash` (that is the
+ *   REST resource name). To see what the key can use:
+ *   `GET https://generativelanguage.googleapis.com/v1beta/models` with the key
+ *   in an `x-goog-api-key` header.
  *
- * - **`supportsStructuredOutputs` is load-bearing** — for the route's repair
- *   pass, which is the one place a JSON schema is still sent. Without it the SDK
- *   omits the schema and that pass cannot do its job.
- *
- * - **The model must call tools, and it must be asked to do so on its own.**
- *   Search is an agentic loop over the Context MCP, and every model tried here
- *   stopped calling tools entirely the moment a JSON schema was forced on the
- *   same request. The route no longer does that; see its comment. What is still
- *   per-model is whether the model calls tools *well*, which is why the id is an
- *   env var rather than a constant.
- *
- * - **Zen reports upstream failures inside a `200`.** A body of
- *   `{"error":{"message":"Upstream request failed: [502] …"}}` arrives with a
- *   success status, so the SDK's retry never fires and it surfaces as
- *   `AI_APICallError: Invalid JSON response`. On the free tier this is common
- *   enough to expect. The route fails safely; the fix is to retry the search.
+ * - **The model must be left to call tools on its own.** Search is an agentic
+ *   loop over the Context MCP, and a model that answers without calling a tool
+ *   returns an empty result set, not an error. Forcing a JSON schema on the same
+ *   request as the tools stopped every model tried so far from calling them, so
+ *   the route sends a schema only on its separate repair pass. See its comment.
+ *   Whether a model calls tools *well* is still per-model, which is why the id
+ *   is an env var rather than a constant.
  */
-
-const DEFAULT_BASE_URL = "https://opencode.ai/zen/v1";
 
 /**
- * Free on Zen's tier, and the larger of the two Nemotron models it serves.
+ * Fast, tool-capable, and served to this key — chosen by measurement, not by
+ * version number. One tool-calling request per model, timed:
  *
- * Its earlier failures both had other causes: it returned unparseable JSON only
- * while a schema was being forced on the tool loop, which the route no longer
- * does, and "Upstream error from Nvidia: Service temporarily overloaded" is a
- * capacity condition rather than anything about the model. Its sibling,
- * `nemotron-3.5-lightning-free`, is the fallback if this one is unavailable.
+ * | model | called the tool | latency |
+ * | --- | --- | --- |
+ * | `gemini-3.5-flash` | 4/4 | **2-5s** |
+ * | `gemini-3.8-flash` | 3/3 | 54-177s, even at `thinkingLevel: low` |
+ * | `gemini-flash-latest` | 1/1 | 87s |
+ * | `gemini-2.5-flash` | — | 404, retired for new users |
  *
- * Being open-weights is the second reason: those are the models least likely to
- * be routed to a vendor-native endpoint this provider cannot speak to (see the
- * module comment).
- *
- * `curl.exe -s https://opencode.ai/zen/v1/models` lists what is served and needs
- * no API key, so checking a candidate exists costs nothing.
+ * The route fits up to twelve model calls inside a 90s deadline, so a model
+ * that takes a minute per call times out every search, however well it reasons.
+ * Re-measure before switching to a newer id.
  */
-const DEFAULT_MODEL = "nemotron-3-ultra-free";
+const DEFAULT_MODEL = "gemini-3.5-flash";
 
 function assertValue<T>(value: T | undefined, errorMessage: string): T {
-  if (value === undefined) {
+  if (value === undefined || value === "") {
     throw new Error(errorMessage);
   }
   return value;
@@ -72,51 +58,20 @@ function assertValue<T>(value: T | undefined, errorMessage: string): T {
 /**
  * Asserted at module load, not at request time: a missing key should stop the
  * server with the variable's name in the message, rather than surfacing as an
- * opaque 401 inside a search three minutes later.
- */
-const apiKey = assertValue(
-  process.env.OPENCODE_API_KEY,
-  "Missing environment variable: OPENCODE_API_KEY",
-);
-
-/**
- * The gateway to talk to, validated at module load alongside the key.
+ * opaque 400 inside a search three minutes later.
  *
- * `OPENCODE_API_KEY` is sent as a bearer token on every request, so the
- * endpoint has to be one that cannot be read off the wire: an `http://`
- * override — a proxy someone pointed at a local port, a copy-pasted example —
- * would hand a billed credential to anything on the path. An override is
- * allowed, plaintext is not, and the failure is a startup error naming the
- * variable rather than a leak nobody notices.
+ * Passed explicitly, so the SDK's implicit `GOOGLE_GENERATIVE_AI_API_KEY`
+ * lookup is never what decides which credential is used. No base URL override
+ * is offered: the SDK's default is Google's own https endpoint.
  */
-function resolveBaseUrl(): string {
-  const configured = process.env.OPENCODE_BASE_URL?.trim();
-  if (!configured) return DEFAULT_BASE_URL;
-
-  let url: URL;
-  try {
-    url = new URL(configured);
-  } catch {
-    throw new Error("OPENCODE_BASE_URL is not a valid URL.");
-  }
-
-  if (url.protocol !== "https:") {
-    throw new Error(
-      "OPENCODE_BASE_URL must be an https: URL — OPENCODE_API_KEY is sent with every request.",
-    );
-  }
-
-  return configured;
-}
-
-const opencode = createOpenAICompatible({
-  name: "opencode",
-  baseURL: resolveBaseUrl(),
-  apiKey,
-  supportsStructuredOutputs: true,
+const google = createGoogleGenerativeAI({
+  apiKey: assertValue(
+    process.env.GEMINI_API_KEY?.trim(),
+    "Missing environment variable: GEMINI_API_KEY",
+  ),
 });
 
 /** The model id, exported for analytics so a result-quality change is attributable. */
-export const searchModelId = process.env.OPENCODE_MODEL || DEFAULT_MODEL;
+export const searchModelId = process.env.GEMINI_MODEL?.trim() || DEFAULT_MODEL;
 
-export const searchModel = opencode.chatModel(searchModelId);
+export const searchModel = google(searchModelId);
