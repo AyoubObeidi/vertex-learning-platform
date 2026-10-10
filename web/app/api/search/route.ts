@@ -57,7 +57,7 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 100;
 
 /** The provider behind `searchModel`, recorded on the analytics event. */
-const PROVIDER = "opencode";
+const PROVIDER = "google";
 
 /**
  * Structured output counts as a step, so the cap has to leave room for the tool
